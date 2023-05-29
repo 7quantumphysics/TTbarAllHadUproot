@@ -109,6 +109,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         m_pT_axis      = hist.axis.Regular(60, 0, 0.6, name="m_pT", label=r"Jet $m/p_T$")
         cats_axis      = hist.axis.IntCategory(range(len(self.anacats)), name="anacat", label="Analysis Category")
         manual_axis    = hist.axis.Variable(manual_bins, name="jetp", label=r"Jet Momentum [GeV]")
+
+        deepAK8_axis   = hist.axis.Regular(50, 0, 1, name="deepAK8", label=r"MD deepAK8")
         
         
         # output
@@ -124,7 +126,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             'jetpt'  : hist.Hist(cats_axis, jetpt_axis, storage="weight", name="Counts"),
             'jeteta'  : hist.Hist(cats_axis, jeteta_axis, storage="weight", name="Counts"),
             'jetphi'  : hist.Hist(cats_axis, jetphi_axis, storage="weight", name="Counts"),
-            'deepTagMD_TvsQCD' : hist.Hist(jetpt_axis, ttbarmass_axis, m_pT_axis, tagger_axis, storage="weight", name="Counts"),
+            'deepAK8' : hist.Hist(jetpt_axis, ttbarmass_axis, m_pT_axis, deepAK8_axis, storage="weight", name="Counts"),
                         
             # accumulators
             'cutflow': processor.defaultdict_accumulator(int),
@@ -490,7 +492,9 @@ class TTbarResProcessor(processor.ProcessorABC):
         jetphi = ttbarcands.slot1.p4.phi
         jetmass = ttbarcands.slot1.p4.mass
         jetp = ttbarcands.slot1.p4.p
-           
+        SDjetmass = ttbarcands.slot1.msoftdrop
+        m_pT = jetmass/jetpt
+        deepAK8 = ttbarcands.slot1.deepTagMD_TvsQCD
         
         # values for mistag rate calculation #
         
@@ -510,7 +514,12 @@ class TTbarResProcessor(processor.ProcessorABC):
             
             
         
-        
+        output['deepAK8'].fill(jetpt = ak.flatten(jetpt),
+                               ttbarmass = ak.flatten(ttbarmass),
+                               m_pT = ak.flatten(m_pT),
+                               deepAK8 = ak.flatten(deepAK8),
+                               weight = weights,
+        		      )
 
         for i, [ilabel,icat] in enumerate(labels_and_categories.items()):
         
@@ -530,7 +539,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                                      ttbarmass = ak.flatten(ttbarmass[icat]),
                                      weight = weights[icat],
                                     )
-            
+            output['SDjetmass'].fill(anacat = i,
+                                   SDjetmass = ak.flatten(SDjetmass[icat]),
+                                   weight = weights[icat],
+                                  )
             output['jetmass'].fill(anacat = i,
                                    jetmass = ak.flatten(jetmass[icat]),
                                    weight = weights[icat],
