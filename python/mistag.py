@@ -12,7 +12,7 @@ import os
 
 # ## analysis categories
 
-IOVs = ['2016'] #['2016APV', '2016']
+IOVs = ['2016APV', '2016']
 label_dict = util.load(f'outputs/QCD_{IOVs[0]}.coffea')['analysisCategories']
 
 for i,l in label_dict.items():
@@ -47,6 +47,7 @@ coffeaFiles = {
             "C": coffea_dir+'JetHT_2016APVC.coffea',
             "D": coffea_dir+'JetHT_2016APVD.coffea',
             "E": coffea_dir+'JetHT_2016APVE.coffea',
+            "F": coffea_dir+'JetHT_2016APVF.coffea',
         },
         "2016": {
             "F": coffea_dir+'JetHT_2016F.coffea',
