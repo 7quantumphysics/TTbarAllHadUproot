@@ -106,7 +106,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         jetpt_axis     = hist.axis.Regular(50, 400, 2000, name="jetpt", label=r"Jet $p_{T}$ [GeV]")
         jeteta_axis    = hist.axis.Regular(50, -2.4, 2.4, name="jeteta", label=r"Jet $\eta$")
         jetphi_axis    = hist.axis.Regular(50, -np.pi, np.pi, name="jetphi", label=r"Jet $\phi$")
-        m_pT_axis      = hist.axis.Regular(60, 0, 0.6, name="m_pT", label=r"Jet $m/p_T$")
+        m_pT_axis      = hist.axis.Regular(25, 0, 0.5, name="m_pT", label=r"Jet $m/p_T$")
+        msd_pT_axis    = hist.axis.Regular(25, 0, 0.5, name="msd_pT", label=r"Jet $m_{SD}/p_T$")
         cats_axis      = hist.axis.IntCategory(range(len(self.anacats)), name="anacat", label="Analysis Category")
         manual_axis    = hist.axis.Variable(manual_bins, name="jetp", label=r"Jet Momentum [GeV]")
 
@@ -126,15 +127,14 @@ class TTbarResProcessor(processor.ProcessorABC):
             'jetpt'  : hist.Hist(cats_axis, jetpt_axis, storage="weight", name="Counts"),
             'jeteta'  : hist.Hist(cats_axis, jeteta_axis, storage="weight", name="Counts"),
             'jetphi'  : hist.Hist(cats_axis, jetphi_axis, storage="weight", name="Counts"),
-            'deepAK8' : hist.Hist(jetpt_axis, ttbarmass_axis, m_pT_axis, deepAK8_axis, storage="weight", name="Counts"),
+            'deepAK8_mtt' : hist.Hist(jetpt_axis, ttbarmass_axis, m_pT_axis, deepAK8_axis, storage="weight", name="Counts"),
+            'deepAK8_msd' : hist.Hist(jetpt_axis, SDjetmass_axis, msd_pT_axis, deepAK8_axis, storage="weight", name="Counts"),
                         
             # accumulators
             'cutflow': processor.defaultdict_accumulator(int),
             
         }
         
-      
-
         
     @property
     def accumulator(self):
@@ -425,7 +425,6 @@ class TTbarResProcessor(processor.ProcessorABC):
         # use subset of analysis category masks from ttbaranalysis.py
         labels_and_categories = {label:categories[label] for label in self.anacats}
     
- 
         
         
 
@@ -494,6 +493,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         jetp = ttbarcands.slot1.p4.p
         SDjetmass = ttbarcands.slot1.msoftdrop
         m_pT = jetmass/jetpt
+        msd_pT = SDjetmass/jetpt
         deepAK8 = ttbarcands.slot1.deepTagMD_TvsQCD
         
         # values for mistag rate calculation #
@@ -514,9 +514,15 @@ class TTbarResProcessor(processor.ProcessorABC):
             
             
         
-        output['deepAK8'].fill(jetpt = ak.flatten(jetpt),
+        output['deepAK8_mtt'].fill(jetpt = ak.flatten(jetpt),
                                ttbarmass = ak.flatten(ttbarmass),
                                m_pT = ak.flatten(m_pT),
+                               deepAK8 = ak.flatten(deepAK8),
+                               weight = weights,
+        		      )
+        output['deepAK8_msd'].fill(jetpt = ak.flatten(jetpt),
+                               SDjetmass = ak.flatten(SDjetmass),
+                               msd_pT = ak.flatten(msd_pT),
                                deepAK8 = ak.flatten(deepAK8),
                                weight = weights,
         		      )
