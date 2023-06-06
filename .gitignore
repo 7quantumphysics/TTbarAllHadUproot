@@ -3,3 +3,9 @@
 *.png
 *.pdf
 python/__pycache__/corrections.cpython-38.pyc
+.bashrc
+.condor_config
+.env/
+.ipython/
+.local/
+shell
