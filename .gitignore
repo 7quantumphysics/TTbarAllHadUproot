@@ -1,3 +1,5 @@
 *.root
 *.pyc
+*.png
+*.pdf
 python/__pycache__/corrections.cpython-38.pyc
