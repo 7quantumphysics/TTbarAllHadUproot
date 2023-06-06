@@ -382,12 +382,12 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         
-#         if (self.bkgEst):
-#             btag0, btag1, btag2 = btagCorrections([btag0, btag1, btag2], 
-#                                                   [SubJet00, SubJet01, SubJet10, SubJet11], 
-#                                                   isData, 
-#                                                   self.bdisc,
-#                                                   sysType='central')
+        if (self.bkgEst):
+            btag0, btag1, btag2 = btagCorrections([btag0, btag1, btag2], 
+                                                  [SubJet00, SubJet01, SubJet10, SubJet11], 
+                                                  isData, 
+                                                  self.bdisc,
+                                                  sysType='central')
         
         
         
@@ -442,46 +442,44 @@ class TTbarResProcessor(processor.ProcessorABC):
             mistag_weights = np.ones(len(evtweights), dtype=float)
             
             
-            # for mass modification
-
-#             qcdfile = util.load(f'data/corrections/backgroundEstimate/QCD_{self.iov}.coffea')
-            qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
-            qcd_jetmass_bins = qcd_jetmass_dict['bins']
+            # # for mass modification
+            # qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
+            # qcd_jetmass_bins = qcd_jetmass_dict['bins']
 
     
-            for ilabel,icat in labels_and_categories.items():
+            # for ilabel,icat in labels_and_categories.items():
             
             
             
                 
-                icat = ak.flatten(icat)
+            #     icat = ak.flatten(icat)
 
 
-                # get antitag region and signal region labels
-                # ilabel[-5:] = bcat + ycat (0bcen for example)
-                label_at = 'at'+ilabel[-5:]
-                label_2t = '2t'+ilabel[-5:]
+            #     # get antitag region and signal region labels
+            #     # ilabel[-5:] = bcat + ycat (0bcen for example)
+            #     label_at = 'at'+ilabel[-5:]
+            #     label_2t = '2t'+ilabel[-5:]
 
                 
-                # get mistag rate for antitag region
-                mistag_rate = mistag_rate_df[label_at].values
+            #     # get mistag rate for antitag region
+            #     mistag_rate = mistag_rate_df[label_at].values
 
-                # get p bin for probe jet p
-                mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
+            #     # get p bin for probe jet p
+            #     mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
 
-                # store mistag weights for events in this category
-                mistag_weights[icat] = mistag_rate[mistag_pbin]
+            #     # store mistag weights for events in this category
+            #     mistag_weights[icat] = mistag_rate[mistag_pbin]
 
 
 
-                # qcd mass modification #
+            #     # qcd mass modification #
 
-                # get distribution of jet mass in QCD signal ('2t') region
-                qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
+            #     # get distribution of jet mass in QCD signal ('2t') region
+            #     qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
 
-                # randomly select jet mass from distribution
-                ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
-                ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
+            #     # randomly select jet mass from distribution
+            #     ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
+            #     ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
 
     
 
