@@ -105,6 +105,7 @@ if __name__ == "__main__":
 
         from lpcjobqueue import LPCCondorCluster
         cluster = LPCCondorCluster(memory='6GB', transfer_input_files=upload_to_dask)
+        # cluster = Cluster(transfer_input_files=upload_to_dask)
         cluster.adapt(minimum=1, maximum=100)
     
         
