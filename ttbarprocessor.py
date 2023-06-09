@@ -335,7 +335,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         if self.useDeepAK8:
             ttag_s0 = ttbarcands.slot0.deepTagMD_TvsQCD > self.deepAK8Cut
             ttag_s1 = ttbarcands.slot1.deepTagMD_TvsQCD > self.deepAK8Cut
-            antitag = ttbarcands.slot0.deepTagMD_TvsQCD < self.deepAK8Cut 
+            antitag = (ttbarcands.slot0.deepTagMD_TvsQCD < self.deepAK8Cut) & (ttbarcands.slot0.deepTagMD_TvsQCD > 0.2)
 
             
         # ----------- CMS Top Tagger Version 2 (SD and Tau32 Cuts) ----------- #
