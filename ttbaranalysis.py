@@ -63,8 +63,7 @@ if __name__ == "__main__":
     
     
     
-    # analysis categories #
-    
+        
     # analysis categories #
     # ttagcats = ["AT&Pt", "at", "pret", "0t", "1t", ">=1t", "2t", ">=0t"]
     ttagcats = ["at", "pret", "2t"]

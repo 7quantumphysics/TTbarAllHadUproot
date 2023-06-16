@@ -61,7 +61,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                  maxMSD=210.,
                  tau32Cut=0.65,
                  bdisc=0.5847,
-                 deepAK8Cut=0.632,
+                 deepAK8Cut=0.632, 
                  useDeepAK8=True,
                  iov='2016APV',
                  bkgEst=False,
@@ -164,7 +164,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             events = events[lumi_mask]
             del lumi_mask
 
-        elif ('TTbar' in dataset) or ('QCD' in dataset) : 
+        elif 'QCD' in dataset: # ('TTbar' in dataset) or ('QCD' in dataset) : 
             if dataset not in self.means_stddevs : 
                 average = np.average( events.genWeight )
                 stddev = np.std( events.genWeight )
@@ -333,9 +333,13 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         # ----------- DeepAK8 Tagger (Discriminator Cut) ----------- #
         if self.useDeepAK8:
+            mcut_s0 = (self.minMSD < ttbarcands.slot0.msoftdrop) & (ttbarcands.slot0.msoftdrop < self.maxMSD) 
+            mcut_s1 = (self.minMSD < ttbarcands.slot1.msoftdrop) & (ttbarcands.slot1.msoftdrop < self.maxMSD) 
+            
             ttag_s0 = ttbarcands.slot0.deepTagMD_TvsQCD > self.deepAK8Cut
             ttag_s1 = ttbarcands.slot1.deepTagMD_TvsQCD > self.deepAK8Cut
-            antitag = ttbarcands.slot0.deepTagMD_TvsQCD < self.deepAK8Cut 
+            
+            antitag = (~ttag_s0) & (mcut_s0)
 
             
         # ----------- CMS Top Tagger Version 2 (SD and Tau32 Cuts) ----------- #
@@ -381,18 +385,15 @@ class TTbarResProcessor(processor.ProcessorABC):
         fwd = (~cen)
         
         
-        
+        btag_weights = {}
         if (self.bkgEst):
-            btag0, btag1, btag2 = btagCorrections([btag0, btag1, btag2], 
+            btag_weights = btagCorrections([btag0, btag1, btag2], 
                                                   [SubJet00, SubJet01, SubJet10, SubJet11], 
                                                   isData, 
                                                   self.bdisc,
                                                   sysType='central')
         
         
-        
-
-                         
         
         # analysis category mask #
         
@@ -413,7 +414,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                  ">=0t":Alltags
                 }
 
-#         ttags = [antitag, pretag,ttag2]       
+#         ttags = [antitag, pretag, ttag2]       
         
         
         # get all analysis category masks
@@ -442,44 +443,44 @@ class TTbarResProcessor(processor.ProcessorABC):
             mistag_weights = np.ones(len(evtweights), dtype=float)
             
             
-            # # for mass modification
-            # qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
-            # qcd_jetmass_bins = qcd_jetmass_dict['bins']
+            # for mass modification
+            qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
+            qcd_jetmass_bins = qcd_jetmass_dict['bins']
 
     
-            # for ilabel,icat in labels_and_categories.items():
+            for ilabel,icat in labels_and_categories.items():
             
             
             
                 
-            #     icat = ak.flatten(icat)
+                icat = ak.flatten(icat)
 
 
-            #     # get antitag region and signal region labels
-            #     # ilabel[-5:] = bcat + ycat (0bcen for example)
-            #     label_at = 'at'+ilabel[-5:]
-            #     label_2t = '2t'+ilabel[-5:]
+                # get antitag region and signal region labels
+                # ilabel[-5:] = bcat + ycat (0bcen for example)
+                label_at = 'at'+ilabel[-5:]
+                label_2t = '2t'+ilabel[-5:]
 
                 
-            #     # get mistag rate for antitag region
-            #     mistag_rate = mistag_rate_df[label_at].values
+                # get mistag rate for antitag region
+                mistag_rate = mistag_rate_df[label_at].values
 
-            #     # get p bin for probe jet p
-            #     mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
+                # get p bin for probe jet p
+                mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
 
-            #     # store mistag weights for events in this category
-            #     mistag_weights[icat] = mistag_rate[mistag_pbin]
+                # store mistag weights for events in this category
+                mistag_weights[icat] = mistag_rate[mistag_pbin]
 
 
 
-            #     # qcd mass modification #
+                # qcd mass modification #
 
-            #     # get distribution of jet mass in QCD signal ('2t') region
-            #     qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
+                # get distribution of jet mass in QCD signal ('2t') region
+                qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
 
-            #     # randomly select jet mass from distribution
-            #     ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
-            #     ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
+                # randomly select jet mass from distribution
+                ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
+                ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
 
     
 
@@ -503,7 +504,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         # event weights #
         
         weights = evtweights
-        if self.bkgEst: weights = weights * mistag_weights
+        if self.bkgEst and not isData: weights = weights * mistag_weights * btag_weights[ilabel[-5:-3]]
+        elif self.bkgEst and isData: weights = weights * mistag_weights
         
         # pt reweighting #
         if ('TTbar' in dataset):

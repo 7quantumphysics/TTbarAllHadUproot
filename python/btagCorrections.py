@@ -12,10 +12,10 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
     btag_s0 = ( np.maximum(SubJet01.btagDeepB , SubJet02.btagDeepB) > bdisc )
     btag_s1 = ( np.maximum(SubJet11.btagDeepB , SubJet12.btagDeepB) > bdisc )
     
+    Btag_wgts = {} # To be filled with "btag_wgts" corrections below (Needs to be defined for higher scope)
     
     if not isData:
 
-        Btag_wgts = {} # To be filled with "btag_wgts" corrections below (Needs to be defined for higher scope)
 
         # **************************************************************************************** #
         # --------------------------- Method 1c) Apply Event Weights ----------------------------- #
@@ -137,7 +137,7 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
         Btag_wgts['2b'] = Wgts_to_2btag_region_nonzero
 
 
-    else: # Upgrade or Downgrade btag status based on btag efficiency of all four subjets
+    # else: # Upgrade or Downgrade btag status based on btag efficiency of all four subjets
 
         # **************************************************************************************** #
         # --------------------------- Method 2a) Update B-tag Status ----------------------------- #
@@ -193,9 +193,9 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
 #         btag_s1 = (SubJet11_isBtagged) | (SubJet12_isBtagged)
 
         # --- Re-Define b-Tag Regions with "Updated" Tags ---- #
-        btag0 = (~btag_s0) & (~btag_s1) #(0b)
-        btag1 = btag_s0 ^ btag_s1 #(1b)
-        btag2 = btag_s0 & btag_s1 #(2b)
+#         btag0 = (~btag_s0) & (~btag_s1) #(0b)
+#         btag1 = btag_s0 ^ btag_s1 #(1b)
+#         btag2 = btag_s0 & btag_s1 #(2b)
         
         
-    return btag0, btag1, btag2
+    return Btag_wgts
