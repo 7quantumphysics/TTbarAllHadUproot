@@ -73,7 +73,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                  maxMSD=210.,
                  tau32Cut=0.65,
                  bdisc=0.5847,
-                 deepAK8Cut= 0.177, # Super-loose  0.435, # Loose
+                 deepAK8Cut= 0.435, # Loose
                  useDeepAK8=True,
                  iov='2016APV',
                  bkgEst=False,
