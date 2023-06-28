@@ -90,9 +90,9 @@ RSGluonFiles = {
         
 # systematics plots #
 
-def plotSystematics():
+def plotSystematics(variable):
 
-    print('\nPlotting systematics\n')
+    print('\nPlotting systematics for ' + variable + '\n')
 
 
     for cat, catname in zip(cats, cat_labels):
@@ -127,9 +127,9 @@ def plotSystematics():
 
 
 
-            httbar = functions.getHist('ttbarmass', 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':'nominal'})    
-            httbarUp = functions.getHist('ttbarmass', 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':syst+'Up'})
-            httbarDn = functions.getHist('ttbarmass', 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':syst+'Down'})
+            httbar = functions.getHist(variable, 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':'nominal'})    
+            httbarUp = functions.getHist(variable, 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':syst+'Up'})
+            httbarDn = functions.getHist(variable, 'TTbar', False, IOV, sum_axes=['anacat'], integrate_axes={'anacat':signal_cats,'systematic':syst+'Down'})
 
             hep.histplot(httbar, histtype='step', color='k', ax=ax1, label='Nominal')
             hep.histplot(httbarUp, histtype='step', color='green', ax=ax1, label='Up')
@@ -165,7 +165,9 @@ def plotSystematics():
 
 
 
-    masses = ['1000', '5000']
+    masses = ['1000', '1500', '2000', 
+              '2500', '3000', '3500', 
+              '4000', '4500', '5000']
 
     for mass in masses:
 
@@ -237,32 +239,40 @@ def plotSystematics():
 
 
                 
-def plotClosureTest():
+def plotClosureTest(variable):
     
     
-    print('\nPlotting Closure Test\n')
+    print('\nPlotting Closure Test for ' + variable + '\n')
     
 
     fig, (ax1, ax2) = plt.subplots(nrows=2, height_ratios=[3, 1])
 
+    masses = ['1000', '1500', '2000', 
+              '2500', '3000', '3500', 
+              '4000', '4500', '5000']
 
-
-    hbkg = functions.getHist2('ttbarmass', 'JetHT', IOV,
+    hbkg = functions.getHist2(variable, 'JetHT', IOV,
              sum_axes=['anacat'],
              integrate_axes={'systematic':'nominal', 'anacat':antitag_cats},
              tag = '_bkgest'
-
             )
 
-    httbar = functions.getHist2('ttbarmass', 'TTbar', IOV,
+    httbar = functions.getHist2(variable, 'TTbar', IOV,
              sum_axes=['anacat'],
              integrate_axes={'systematic':'nominal', 'anacat':signal_cats},        
             )
 
-    hsig = functions.getHist2('ttbarmass', 'JetHT', IOV,
+    hsig = functions.getHist2(variable, 'JetHT', IOV,
              sum_axes=['anacat'],
              integrate_axes={'systematic':'nominal', 'anacat':signal_cats}        
             )
+    
+    hrsg = {}
+    for mass in masses:
+        hrsg[mass] = functions.getHist2(variable, f'RSGluon{mass}', IOV,
+                     sum_axes=['anacat'],
+                     integrate_axes={'systematic':'nominal', 'anacat':signal_cats}        
+                    )
 
     text = 'Preliminary'+'\n'+r'$\Delta y$ inclusive'+', '+r'b-tag inclusive'
 
@@ -272,7 +282,8 @@ def plotClosureTest():
     hep.histplot(hsig, histtype='errorbar', color='black', label='Data', ax=ax1)
     hep.histplot(hbkg, histtype='fill', color='xkcd:pale gold', label='NTMJ Bkg Est', ax=ax1)
     hep.histplot(httbar, histtype='fill', color='xkcd:deep red', label='SM TTbar', ax=ax1)
-
+    for mass in masses:
+        hep.histplot(hrsg[mass], histtype='step', label=f'RSGluon {mass} GeV', ax=ax1)
 
 
 
@@ -313,22 +324,29 @@ def plotClosureTest():
         antitag_cat = label_to_int['at'+cat]
 
 
-        hbkg = functions.getHist2('ttbarmass', 'JetHT', IOV,
+        hbkg = functions.getHist2(variable, 'JetHT', IOV,
                  sum_axes=[],
                  integrate_axes={'systematic':'nominal', 'anacat':antitag_cat},
                  tag = '_bkgest'
 
                 )
 
-        httbar = functions.getHist2('ttbarmass', 'TTbar', IOV,
+        httbar = functions.getHist2(variable, 'TTbar', IOV,
                  sum_axes=[],
                  integrate_axes={'systematic':'nominal', 'anacat':signal_cat},        
                 )
 
-        hsig = functions.getHist2('ttbarmass', 'JetHT', IOV,
+        hsig = functions.getHist2(variable, 'JetHT', IOV,
                  sum_axes=[],
                  integrate_axes={'systematic':'nominal', 'anacat':signal_cat}        
                 )
+        
+        hrsg = {}
+        for mass in masses:
+            hrsg[mass] = functions.getHist2(variable, f'RSGluon{mass}', IOV,
+                         sum_axes=[],
+                         integrate_axes={'systematic':'nominal', 'anacat':signal_cats}        
+                        )
 
 
         dytext = ''
@@ -384,22 +402,22 @@ def plotClosureTest():
     
     
 
-def plotClosureTestQCD():
+def plotClosureTestQCD(variable):
     
     
-    print('\nPlotting QCD Closure Test\n')
+    print('\nPlotting QCD Closure Test for ' + variable + '\n')
 
     
     fig, (ax1, ax2) = plt.subplots(nrows=2, height_ratios=[3, 1])
 
-    hbkg = functions.getHist2('ttbarmass', 'QCD', IOV,
+    hbkg = functions.getHist2(variable, 'QCD', IOV,
              sum_axes=['anacat'],
              integrate_axes={'systematic':'nominal', 'anacat':antitag_cats},
              tag = '_bkgest'
 
             )
 
-    hsig = functions.getHist2('ttbarmass', 'QCD', IOV,
+    hsig = functions.getHist2(variable, 'QCD', IOV,
              sum_axes=['anacat'],
              integrate_axes={'systematic':'nominal', 'anacat':signal_cats}        
             )
@@ -452,14 +470,14 @@ def plotClosureTestQCD():
         antitag_cat = label_to_int['at'+cat]
 
 
-        hbkg = functions.getHist2('ttbarmass', 'QCD', IOV,
+        hbkg = functions.getHist2(variable, 'QCD', IOV,
              sum_axes=[],
              integrate_axes={'systematic':'nominal', 'anacat':antitag_cat},
              tag = '_bkgest'
 
             )
 
-        hsig = functions.getHist2('ttbarmass', 'QCD', IOV,
+        hsig = functions.getHist2(variable, 'QCD', IOV,
              sum_axes=[],
              integrate_axes={'systematic':'nominal', 'anacat':signal_cat}        
             )
@@ -511,11 +529,11 @@ def plotClosureTestQCD():
 
 
 
-
-
-plotSystematics()
-plotClosureTest()
-plotClosureTestQCD()
+histograms = ['ttbarmass', 'jetpt', 'jeteta', 'jetphi', 'jetmass', 'sdjetmass', 'jety']
+for histogram in histograms:
+    plotSystematics(histogram)
+    plotClosureTest(histogram)
+    plotClosureTestQCD(histogram)
 
 
    
