@@ -12,7 +12,7 @@ import os
 
 # ## analysis categories
 
-IOVs = ['2016'] #['2016APV', '2016']
+IOVs = ['2016APV', '2016']
 label_dict = util.load(f'outputs/QCD_{IOVs[0]}.coffea')['analysisCategories']
 
 for i,l in label_dict.items():
@@ -47,6 +47,7 @@ coffeaFiles = {
             "C": coffea_dir+'JetHT_2016APVC.coffea',
             "D": coffea_dir+'JetHT_2016APVD.coffea',
             "E": coffea_dir+'JetHT_2016APVE.coffea',
+            "F": coffea_dir+'JetHT_2016APVF.coffea',
         },
         "2016": {
             "F": coffea_dir+'JetHT_2016F.coffea',
@@ -96,7 +97,7 @@ ttbar_xs = {}
 ttbar_xs["700to1000"] = 831.76 * (0.09210)
 ttbar_xs["1000toInf"] = 831.76 * (0.02474)
 toptag_sf = 0.9
-toptag_kf = 0.7
+toptag_kf = 1.0
 
 
 # ## calculate mistag rate
