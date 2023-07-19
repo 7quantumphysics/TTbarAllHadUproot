@@ -150,10 +150,11 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         # systematics
         syst_category_strings = ['nominal'] 
-        for s in self.systematics:
-            if not 'nominal' in s:
-                syst_category_strings.append(s+'Down')
-                syst_category_strings.append(s+'Up')
+        if not self.noSyst:
+            for s in self.systematics:
+                if not 'nominal' in s:
+                    syst_category_strings.append(s+'Down')
+                    syst_category_strings.append(s+'Up')
         
         
         # axes
