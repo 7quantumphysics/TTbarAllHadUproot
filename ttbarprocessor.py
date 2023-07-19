@@ -343,7 +343,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         # blinding #
-        if isData: #and (('2017' in self.iov) or ('2018' in self.iov)):
+        if (isData and self.bkgEst) and (('2017' in self.iov) or ('2018' in self.iov)):
             events = events[::10]
             
         
@@ -394,10 +394,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                 evtweights = events.genWeight
             else: 
                 evtweights = events.LHEWeight_originalXWGTUP
-        
-        output['cutflow']['all events'] += len(FatJets)
-        output['cutflow']['sumw'] += np.sum(evtweights)
-        output['cutflow']['sumw2'] += np.sum(evtweights**2)
+        if correction == 'nominal':
+            output['cutflow']['all events'] += len(FatJets)
+            output['cutflow']['sumw'] += np.sum(evtweights)
+            output['cutflow']['sumw2'] += np.sum(evtweights**2)
         
               
         
@@ -433,11 +433,12 @@ class TTbarResProcessor(processor.ProcessorABC):
         # event cuts #
         
         # save cutflow
-        cuts = []
-        for cut in selection.names:
-            cuts.append(cut)
-            output['cutflow'][cut] += len(FatJets[selection.all(*cuts)])
-        del cuts
+        if correction == 'nominal':
+            cuts = []
+            for cut in selection.names:
+                cuts.append(cut)
+                output['cutflow'][cut] += len(FatJets[selection.all(*cuts)])
+            del cuts
         
         eventCut = selection.all(*selection.names)
         FatJets = FatJets[eventCut]
@@ -476,9 +477,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         GoodSubjets = ak.flatten(((hasSubjets0) & (hasSubjets1)))
         
         # apply ttbar event cuts #
-        output['cutflow']['oneTTbar'] += len(FatJets[oneTTbar])
-        output['cutflow']['dPhiCut'] += len(FatJets[(oneTTbar & dPhiCut)])
-        output['cutflow']['Good Subjets'] += len(FatJets[(oneTTbar & dPhiCut & GoodSubjets)])
+        if correction == 'nominal':
+            output['cutflow']['oneTTbar'] += len(FatJets[oneTTbar])
+            output['cutflow']['dPhiCut'] += len(FatJets[(oneTTbar & dPhiCut)])
+            output['cutflow']['Good Subjets'] += len(FatJets[(oneTTbar & dPhiCut & GoodSubjets)])
 
         ttbarcandCuts = (oneTTbar & dPhiCut & GoodSubjets)
         ttbarcands = ttbarcands[ttbarcandCuts]
@@ -723,14 +725,14 @@ class TTbarResProcessor(processor.ProcessorABC):
 #                 rpf_down = p0_down + p1_down*mtt
 
                 
-#                 # get mistag rate for antitag region
-#                 mistag_rate = mistag_rate_df[label_at].values
+                # get mistag rate for antitag region
+                mistag_rate = mistag_rate_df[label_at].values
 
-#                 # get p bin for probe jet p
-#                 mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
+                # get p bin for probe jet p
+                mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
 
-#                 # store mistag weights for events in this category
-#                 mistag_weights[icat] = mistag_rate[mistag_pbin]
+                # store mistag weights for events in this category
+                mistag_weights[icat] = mistag_rate[mistag_pbin]
 
 
 
@@ -863,16 +865,33 @@ class TTbarResProcessor(processor.ProcessorABC):
             icat = ak.flatten(icat)
                 
                 
-                                
-            output['numerator'].fill(anacat = i,
-                                     jetp = ak.flatten(numerator[icat]),
+            if correction == 'nominal':                    
+                output['numerator'].fill(anacat = i,
+                                         jetp = ak.flatten(numerator[icat]),
+                                         weight = weights.weight()[icat],
+                                        )
+
+                output['denominator'].fill(anacat = i,
+                                           jetp = ak.flatten(denominator[icat]),
+                                           weight = weights.weight()[icat],
+                                        )
+                output['jetmass'].fill(anacat = i,
+                                   jetmass = ak.flatten(jetmass[icat]),
+                                   weight = weights.weight()[icat],
+                                  )
+                output['jetpt'].fill(anacat = i,
+                                     jetpt = ak.flatten(jetpt[icat]),
                                      weight = weights.weight()[icat],
-                                    )
-            
-            output['denominator'].fill(anacat = i,
-                                       jetp = ak.flatten(denominator[icat]),
-                                       weight = weights.weight()[icat],
-                                    )
+                                      )
+
+                output['jeteta'].fill(anacat = i,
+                                      jeteta = ak.flatten(jeteta[icat]),
+                                      weight = weights.weight()[icat],
+                                      )
+                output['jetphi'].fill(anacat = i,
+                                      jetphi = ak.flatten(jetphi[icat]),
+                                      weight = weights.weight()[icat],
+                                      )
             
             output['ttbarmass'].fill(systematic=correction,
                                      anacat = i,
@@ -880,23 +899,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                                      weight = weights.weight()[icat],
                                     )
             
-            output['jetmass'].fill(anacat = i,
-                                   jetmass = ak.flatten(jetmass[icat]),
-                                   weight = weights.weight()[icat],
-                                  )
-            output['jetpt'].fill(anacat = i,
-                                 jetpt = ak.flatten(jetpt[icat]),
-                                 weight = weights.weight()[icat],
-                                  )
             
-            output['jeteta'].fill(anacat = i,
-                                  jeteta = ak.flatten(jeteta[icat]),
-                                  weight = weights.weight()[icat],
-                                  )
-            output['jetphi'].fill(anacat = i,
-                                  jetphi = ak.flatten(jetphi[icat]),
-                                  weight = weights.weight()[icat],
-                                  )
             
             # output['mtt_vs_mt'].fill(systematic=correction,
             #                          anacat = i,
@@ -905,7 +908,8 @@ class TTbarResProcessor(processor.ProcessorABC):
             #                          weight = weights.weight()[icat],
             #                         )
             
-            output['discriminators'].fill(anacat = i,
+            output['discriminators'].fill(systematic=correction,
+                                          anacat = i,
                                           jetp = ak.flatten(jetp[icat]),
                                           bdisc = ak.flatten(bdisc_s1[icat]),
                                           tdisc = ak.flatten(tdisc_s1[icat]),
@@ -913,12 +917,12 @@ class TTbarResProcessor(processor.ProcessorABC):
                                           weight = weights.weight()[icat],
                                          )
 
-            output['deepak8'].fill(anacat = i,
-                                   jetp = ak.flatten(jetp[icat]),
-                                   ttbarmass = ak.flatten(ttbarmass[icat]),
-                                   tdisc = ak.flatten(tdisc_s1[icat]),
-                                   weight = weights.weight()[icat],
-                                  )
+#             output['deepak8'].fill(anacat = i,
+#                                    jetp = ak.flatten(jetp[icat]),
+#                                    ttbarmass = ak.flatten(ttbarmass[icat]),
+#                                    tdisc = ak.flatten(tdisc_s1[icat]),
+#                                    weight = weights.weight()[icat],
+#                                   )
             
             
             
