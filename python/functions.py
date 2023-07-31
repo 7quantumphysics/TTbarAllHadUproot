@@ -349,6 +349,7 @@ def getCoffeaFilenames():
 
                 },
                "2017": {
+                    "B": coffea_dir+'JetHT_2017B.coffea',
                     "C": coffea_dir+'JetHT_2017C.coffea',
                     "D": coffea_dir+'JetHT_2017D.coffea',
                     "E": coffea_dir+'JetHT_2017E.coffea',
@@ -375,6 +376,7 @@ def getCoffeaFilenames():
 
                 },
                 "2017": {
+                    "B": coffea_dir+'JetHT_2017B_bkgest.coffea',
                     "C": coffea_dir+'JetHT_2017C_bkgest.coffea',
                     "D": coffea_dir+'JetHT_2017D_bkgest.coffea',
                     "E": coffea_dir+'JetHT_2017E_bkgest.coffea',
