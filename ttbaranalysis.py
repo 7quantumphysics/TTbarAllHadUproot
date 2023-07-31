@@ -136,7 +136,7 @@ if __name__ == "__main__":
         print('categories =', label_map, file=f)
         print('\n', file=f)
         if not args.noSyst: print('systematics =', systematics, file=f)
-     
+            
     # display analysis info
     print('\n------args------')
     for argname, value in vars(args).items(): print(argname, '=', value)
@@ -149,7 +149,7 @@ if __name__ == "__main__":
     if args.env == 'casa' or args.env == 'C': redirector = 'root://xcache/'
     elif args.env == 'winterfell' or args.env == 'W': redirector = '/mnt/data/cms/'
     else: redirector = 'root://cmsxrootd.fnal.gov/' # default LPC
- 
+        
     jsonfiles = {
         "JetHT": 'data/nanoAOD/JetHT.json',
         "QCD": 'data/nanoAOD/QCD.json',
@@ -215,6 +215,7 @@ if __name__ == "__main__":
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
+                subString += '_blinded'  # Temporary labeling convention for my (AC) personal use
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
@@ -323,11 +324,9 @@ if __name__ == "__main__":
                 output['analysisCategories'] = label_map
                 util.save(output, savefilename)
                 print('saving', savefilename)
-
-               
-
-
-
+                
+                
+                
     elapsed = time.time() - tic
     print(f"\nFinished in {elapsed:.1f}s")
     print(f"Events/s: {metrics['entries'] / elapsed:.0f}")

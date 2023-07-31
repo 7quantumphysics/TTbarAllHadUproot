@@ -216,8 +216,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             
         }
         
-      
-
+        
         
     @property
     def accumulator(self):
@@ -344,7 +343,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         # blinding #
-        if (isData and self.bkgEst) and (('2017' in self.iov) or ('2018' in self.iov)):
+        if (isData) and (('2017' in self.iov) or ('2018' in self.iov)): 
             events = events[::10]
             
         
@@ -631,7 +630,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             # bins_mtt = np.arange(800,8000,ybinsize) # 20 bins in mtt
             # x = (1/xbinsize) * bins_mt[(np.digitize(ak.flatten(jetmass), bins_mt) - 1)]
             # y = (1/ybinsize) * bins_mtt[(np.digitize(ak.flatten(ttbarmass), bins_mtt) - 1)]
-   
+            
             # get parameters of transfer function with uncertainties
             # p = self.rpf_params['param']
             # pUp = [p + err for p, err in zip(self.rpf_params['param'], self.rpf_params['error'])]
@@ -695,14 +694,15 @@ class TTbarResProcessor(processor.ProcessorABC):
 #             bins_mtt = np.arange(800,8000,360)
                      
     
-#             for ilabel,icat in labels_and_categories.items():
+            for ilabel,icat in labels_and_categories.items():
             
-#                 icat = ak.flatten(icat)
+                icat = ak.flatten(icat)
 
-#                 # get antitag region and signal region labels
-#                 # ilabel[-5:] = bcat + ycat (0bcen for example)
-#                 label_at = 'at'+ilabel[-5:]
-#                 label_2t = '2t'+ilabel[-5:]
+                # get antitag region and signal region labels
+                # ilabel[-5:] = bcat + ycat (0bcen for example)
+                label_at = 'at'+ilabel[-5:]
+                label_2t = '2t'+ilabel[-5:]
+                
                 
                 
                 
@@ -724,11 +724,12 @@ class TTbarResProcessor(processor.ProcessorABC):
 #                 rpf_nom  = p0 + p1*mtt
 #                 rpf_up   = p0_up + p1_up*mtt
 #                 rpf_down = p0_down + p1_down*mtt
-
-                
+		
                 # get mistag rate for antitag region
+                #print(mistag_rate_df[label_at])
                 mistag_rate = mistag_rate_df[label_at].values
-
+                #print(mistag_rate)
+		
                 # get p bin for probe jet p
                 mistag_pbin = np.digitize(ak.flatten(jetp[icat]), pbins) - 1
 
@@ -740,11 +741,11 @@ class TTbarResProcessor(processor.ProcessorABC):
                 # qcd mass modification #
 
                 # get distribution of jet mass in QCD signal ('2t') region
-#                 qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
+                qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
 
                 # randomly select jet mass from distribution
-#                 ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
-#                 ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
+                ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
+                ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
                 
                 
             weights.add('mistag', mistag_weights)
@@ -864,7 +865,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         for i, [ilabel,icat] in enumerate(labels_and_categories.items()):
         
             icat = ak.flatten(icat)
-                
+            
+            output['cutflow'][ilabel] += np.sum(icat)
                 
             if correction == 'nominal':                    
                 output['numerator'].fill(anacat = i,
@@ -909,7 +911,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             #                          weight = weights.weight()[icat],
             #                         )
             
-            output['discriminators'].fill(systematic=correction,
+            output['discriminators'].fill(#systematic=correction,
                                           anacat = i,
                                           jetp = ak.flatten(jetp[icat]),
                                           bdisc = ak.flatten(bdisc_s1[icat]),
