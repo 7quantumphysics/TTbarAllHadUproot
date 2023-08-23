@@ -30,7 +30,7 @@ if __name__ == "__main__":
     
     # datasets to run
     parser.add_argument('-d', '--dataset',
-                        choices=['JetHT', 'QCD', 'TTbar', 'ZPrime10', 'ZPrime30', 'ZPrimeDM', 'RSGluon'], 
+                        choices=['JetHT', 'QCD', 'TTbar', 'ZPrime1', 'ZPrime10', 'ZPrime30', 'ZPrimeDM', 'RSGluon'], 
                         default=['QCD', 'TTbar', 'JetHT'],
                         action='append'
                        )
@@ -154,6 +154,7 @@ if __name__ == "__main__":
         "JetHT": 'data/nanoAOD/JetHT.json',
         "QCD": 'data/nanoAOD/QCD.json',
         "TTbar": 'data/nanoAOD/TTbar.json',
+        "ZPrime1": 'data/nanoAOD/ZPrime1.json',
         "ZPrime10": 'data/nanoAOD/ZPrime10.json',
         "ZPrime30": 'data/nanoAOD/ZPrime30.json',
         "ZPrimeDM": 'data/nanoAOD/ZPrimeDM.json',
@@ -215,7 +216,7 @@ if __name__ == "__main__":
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
-                subString += '_blinded'  # Temporary labeling convention for my (AC) personal use
+                # subString += '_blinded'  # Temporary labeling convention for my (AC) personal use
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:

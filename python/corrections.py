@@ -8,7 +8,7 @@ from coffea.jetmet_tools import JetResolutionScaleFactor
 from coffea.jetmet_tools import FactorizedJetCorrector, JetCorrectionUncertainty
 from coffea.jetmet_tools import JECStack, CorrectedJetsFactory
 from coffea.lookup_tools import extractor
-
+import copy
     
 def GetFlavorEfficiency(Subjet, Flavor, bdisc): # Return "Flavor" efficiency numerator and denominator
     '''
@@ -55,6 +55,8 @@ def HEMCleaning(JetCollection):
     # original code https://gitlab.cern.ch/gagarwal/ttbardileptonic/-/blob/master/TTbarDileptonProcessor.py#L58
 
     ## Reference: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
+    
+
     isHEM = ak.ones_like(JetCollection.pt)
     detector_region1 = ((JetCollection.phi < -0.87) & (JetCollection.phi > -1.57) &
                        (JetCollection.eta < -1.3) & (JetCollection.eta > -2.5))
@@ -64,15 +66,50 @@ def HEMCleaning(JetCollection):
 
     isHEM            = ak.where(detector_region1 & jet_selection, 0.80, isHEM)
     isHEM            = ak.where(detector_region2 & jet_selection, 0.65, isHEM)
+    
+    corrected_jets = copy.deepcopy(JetCollection)
+    corrected_jets["pt"]   = JetCollection.pt * isHEM
+    corrected_jets["mass"] = JetCollection.mass * isHEM
 
-    return isHEM
+    return corrected_jets
+    
+    
+def HEMVeto(Jets, FatJets, runs):
+
+    ## Reference: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
+    
+    runid = (runs >= 319077)
+
+    
+    detector_region1 = ((Jets.phi < -0.87) & (Jets.phi > -1.57) &
+                           (Jets.eta < -1.3) & (Jets.eta > -2.5))
+    detector_region2 = ((Jets.phi < -0.87) & (Jets.phi > -1.57) &
+                       (Jets.eta < -2.5) & (Jets.eta > -3.0))
+    jet_selection    = ((Jets.jetId > 1) & (Jets.pt > 15))
 
 
+    vetoHEMJets = ak.any((detector_region1 & jet_selection) ^ (detector_region2 & jet_selection), axis=1)
 
+    detector_region1 = ((FatJets.phi < -0.87) & (FatJets.phi > -1.57) &
+                       (FatJets.eta < -1.3) & (FatJets.eta > -2.5))
+    detector_region2 = ((FatJets.phi < -0.87) & (FatJets.phi > -1.57) &
+                       (FatJets.eta < -2.5) & (FatJets.eta > -3.0))
+    jet_selection    = ((FatJets.jetId > 1) & (FatJets.pt > 15))
 
+    vetoHEMFatJets = ak.any((detector_region1 & jet_selection & runid) ^ (detector_region2 & jet_selection & runid), axis=1)
+
+    vetoHEM = ~(vetoHEMJets | vetoHEMFatJets)
+    
+    return vetoHEM
+    
+
+    
 def GetJECUncertainties(FatJets, events, IOV, R='AK8', isData=False):
 
     # original code https://gitlab.cern.ch/gagarwal/ttbardileptonic/-/blob/master/jmeCorrections.py
+    
+    chspuppi = 'Puppi' if 'AK8' in R else 'chs'
+    
 
     jer_tag=None
     if (IOV=='2018'):
@@ -93,7 +130,7 @@ def GetJECUncertainties(FatJets, events, IOV, R='AK8', isData=False):
             "RunE": "Summer19UL17_RunE_V5_DATA",
             "RunF": "Summer19UL17_RunF_V5_DATA",
         }
-        jer_tag = "Summer19UL17_JRV2_MC"
+        jer_tag = "Summer19UL17_JRV3_MC"
     elif (IOV=='2016'):
         jec_tag="Summer19UL16_V7_MC"
         jec_tag_data={
@@ -124,18 +161,19 @@ def GetJECUncertainties(FatJets, events, IOV, R='AK8', isData=False):
     ext = extractor()
     if not isData:
     #For MC
+    
         ext.add_weight_sets([
-            '* * data/corrections/JEC/{0}/{0}_L1FastJet_{1}PFchs.jec.txt'.format(jec_tag, R),
-            '* * data/corrections/JEC/{0}/{0}_L2Relative_{1}PFchs.jec.txt'.format(jec_tag, R),
-            '* * data/corrections/JEC/{0}/{0}_L3Absolute_{1}PFchs.jec.txt'.format(jec_tag, R),
-            '* * data/corrections/JEC/{0}/{0}_UncertaintySources_{1}PFchs.junc.txt'.format(jec_tag, R),
-            '* * data/corrections/JEC/{0}/{0}_Uncertainty_{1}PFchs.junc.txt'.format(jec_tag, R),
+            '* * data/corrections/JEC/{0}/{0}_L1FastJet_{1}PF{2}.jec.txt'.format(jec_tag, R, chspuppi),
+            '* * data/corrections/JEC/{0}/{0}_L2Relative_{1}PF{2}.jec.txt'.format(jec_tag, R, chspuppi),
+            '* * data/corrections/JEC/{0}/{0}_L3Absolute_{1}PF{2}.jec.txt'.format(jec_tag, R, chspuppi),
+            '* * data/corrections/JEC/{0}/{0}_UncertaintySources_{1}PF{2}.junc.txt'.format(jec_tag, R, chspuppi),
+            '* * data/corrections/JEC/{0}/{0}_Uncertainty_{1}PF{2}.junc.txt'.format(jec_tag, R, chspuppi),
         ])
 
         if jer_tag:
             ext.add_weight_sets([
-            '* * data/corrections/JER/{0}/{0}_PtResolution_{1}PFchs.jr.txt'.format(jer_tag, R),
-            '* * data/corrections/JER/{0}/{0}_SF_{1}PFchs.jersf.txt'.format(jer_tag, R)])
+            '* * data/corrections/JER/{0}/{0}_PtResolution_{1}PF{2}.jr.txt'.format(jer_tag, R, chspuppi),
+            '* * data/corrections/JER/{0}/{0}_SF_{1}PF{2}.jersf.txt'.format(jer_tag, R, chspuppi)])
 
 
     else:       
@@ -144,10 +182,10 @@ def GetJECUncertainties(FatJets, events, IOV, R='AK8', isData=False):
         for run, tag in jec_tag_data.items():
             if not (tag in tags_done):
                 ext.add_weight_sets([
-                '* * data/corrections/JEC/{0}/{0}_L1FastJet_{1}PFchs.jec.txt'.format(tag, R),
-                '* * data/corrections/JEC/{0}/{0}_L2Relative_{1}PFchs.jec.txt'.format(tag, R),
-                '* * data/corrections/JEC/{0}/{0}_L3Absolute_{1}PFchs.jec.txt'.format(tag, R),
-                '* * data/corrections/JEC/{0}/{0}_L2L3Residual_{1}PFchs.jec.txt'.format(tag, R),
+                '* * data/corrections/JEC/{0}/{0}_L1FastJet_{1}PF{2}.jec.txt'.format(tag, R, chspuppi),
+                '* * data/corrections/JEC/{0}/{0}_L2Relative_{1}PF{2}.jec.txt'.format(tag, R, chspuppi),
+                '* * data/corrections/JEC/{0}/{0}_L3Absolute_{1}PF{2}.jec.txt'.format(tag, R, chspuppi),
+                '* * data/corrections/JEC/{0}/{0}_L2L3Residual_{1}PF{2}.jec.txt'.format(tag, R, chspuppi),
                 ])
                 tags_done += [tag]
 
@@ -156,26 +194,28 @@ def GetJECUncertainties(FatJets, events, IOV, R='AK8', isData=False):
 
     if (not isData):
         jec_names = [
-            '{0}_L1FastJet_{1}PFchs'.format(jec_tag, R),
-            '{0}_L2Relative_{1}PFchs'.format(jec_tag, R),
-            '{0}_L3Absolute_{1}PFchs'.format(jec_tag, R),
-            '{0}_Uncertainty_{1}PFchs'.format(jec_tag, R)]
+            '{0}_L1FastJet_{1}PF{2}'.format(jec_tag, R, chspuppi),
+            '{0}_L2Relative_{1}PF{2}'.format(jec_tag, R, chspuppi),
+            '{0}_L3Absolute_{1}PF{2}'.format(jec_tag, R, chspuppi),
+            '{0}_Uncertainty_{1}PF{2}'.format(jec_tag, R, chspuppi)]
 
         if jer_tag: 
-            jec_names.extend(['{0}_PtResolution_{1}PFchs'.format(jer_tag, R),
-                              '{0}_SF_{1}PFchs'.format(jer_tag, R)])
+            jec_names.extend(['{0}_PtResolution_{1}PF{2}'.format(jer_tag, R, chspuppi),
+                              '{0}_SF_{1}PF{2}'.format(jer_tag, R, chspuppi)])
 
     else:
         jec_names={}
         for run, tag in jec_tag_data.items():
             jec_names[run] = [
-                '{0}_L1FastJet_{1}PFchs'.format(tag, R),
-                '{0}_L3Absolute_{1}PFchs'.format(tag, R),
-                '{0}_L2Relative_{1}PFchs'.format(tag, R),
-                '{0}_L2L3Residual_{1}PFchs'.format(tag, R),]
+                '{0}_L1FastJet_{1}PF{2}'.format(tag, R, chspuppi),
+                '{0}_L3Absolute_{1}PF{2}'.format(tag, R, chspuppi),
+                '{0}_L2Relative_{1}PF{2}'.format(tag, R, chspuppi),
+                '{0}_L2L3Residual_{1}PF{2}'.format(tag, R, chspuppi),]
 
     if not isData:
         jec_inputs = {name: evaluator[name] for name in jec_names}
+        
+        
     else:
         jec_names_data = []
         for era in self.eras:
@@ -224,59 +264,12 @@ def GetPDFWeights(events):
         pdf_up = pdf_nom + pdfUnc
         pdf_down = pdf_nom - pdfUnc
         
-        
-#         arg = events.LHEPdfWeight[:, 1:-2] - np.ones((len(events), 100))
-#         summed = ak.sum(np.square(arg), axis=1)
-#         pdf_unc = np.sqrt((1. / 99.) * summed)
-        
-#         pdf_nom = np.ones(len(events))
-#         pdf_up = pdf_nom + pdf_unc
-#         pdf_down = np.ones(len(events))
 
     else:
-        
         pdf_up = np.ones(len(events))
         pdf_down = np.ones(len(events))
-        
 
     return [pdf_nom, pdf_up, pdf_down]
-
-
-
-def GetPUSF(events, IOV):
-    # original code https://gitlab.cern.ch/gagarwal/ttbardileptonic/-/blob/master/TTbarDileptonProcessor.py#L38
-    ## json files from: https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/LUM
-        
-    fname = "data/corrections/puWeights/{0}_UL/puWeights.json.gz".format(IOV)
-    hname = {
-        "2016APV": "Collisions16_UltraLegacy_goldenJSON",
-        "2016"   : "Collisions16_UltraLegacy_goldenJSON",
-        "2017"   : "Collisions17_UltraLegacy_goldenJSON",
-        "2018"   : "Collisions18_UltraLegacy_goldenJSON"
-    }
-    evaluator = correctionlib.CorrectionSet.from_file(fname)
-
-    puUp = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "up")
-    puDown = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "down")
-    puNom = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "nominal")
-
-    return [puNom, puUp, puDown]
-
-
-def getLumiMaskRun2(IOV):
-
-    golden_json_path_2016 = "data/corrections/goldenJsons/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt"
-    golden_json_path_2017 = "data/corrections/goldenJsons/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt"
-    golden_json_path_2018 = "data/corrections/goldenJsons/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt"
-    
-
-    masks = {"2016APV":LumiMask(golden_json_path_2016),
-             "2016":LumiMask(golden_json_path_2016),
-             "2017":LumiMask(golden_json_path_2017),
-             "2018":LumiMask(golden_json_path_2018)
-            }
-
-    return masks[IOV]
 
 
 def getMETFilter(IOV, events):
@@ -329,6 +322,40 @@ def getMETFilter(IOV, events):
             
     return metfilter
 
+
+def GetPUSF(events, IOV):
+    # original code https://gitlab.cern.ch/gagarwal/ttbardileptonic/-/blob/master/TTbarDileptonProcessor.py#L38
+    ## json files from: https://gitlab.cern.ch/cms-nanoAOD/jsonpog-integration/-/tree/master/POG/LUM
+        
+    fname = "data/corrections/puWeights/{0}_UL/puWeights.json.gz".format(IOV)
+    hname = {
+        "2016APV": "Collisions16_UltraLegacy_goldenJSON",
+        "2016"   : "Collisions16_UltraLegacy_goldenJSON",
+        "2017"   : "Collisions17_UltraLegacy_goldenJSON",
+        "2018"   : "Collisions18_UltraLegacy_goldenJSON"
+    }
+    evaluator = correctionlib.CorrectionSet.from_file(fname)
+
+    puUp = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "up")
+    puDown = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "down")
+    puNom = evaluator[hname[str(IOV)]].evaluate(np.array(events.Pileup.nTrueInt), "nominal")
+
+    return [puNom, puUp, puDown]
+
+def getLumiMaskRun2(IOV):
+
+    golden_json_path_2016 = "data/corrections/goldenJsons/Cert_271036-284044_13TeV_Legacy2016_Collisions16_JSON.txt"
+    golden_json_path_2017 = "data/corrections/goldenJsons/Cert_294927-306462_13TeV_UL2017_Collisions17_GoldenJSON.txt"
+    golden_json_path_2018 = "data/corrections/goldenJsons/Cert_314472-325175_13TeV_Legacy2018_Collisions18_JSON.txt"
+    
+
+    masks = {"2016APV":LumiMask(golden_json_path_2016),
+             "2016":LumiMask(golden_json_path_2016),
+             "2017":LumiMask(golden_json_path_2017),
+             "2018":LumiMask(golden_json_path_2018)
+            }
+
+    return masks[IOV]
 
 def pTReweighting(pt0, pt1):
         topcand0_wgt = np.exp(0.0615 - 0.0005*pt0)

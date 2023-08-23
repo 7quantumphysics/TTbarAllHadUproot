@@ -33,6 +33,7 @@ sys.path.append(os.getcwd()+'/python/')
 from corrections import (
     GetFlavorEfficiency,
     HEMCleaning,
+    HEMVeto,
     GetL1PreFiringWeight,
     GetJECUncertainties,
     GetPDFWeights,
@@ -136,8 +137,36 @@ class TTbarResProcessor(processor.ProcessorABC):
         }
     
         
-        self.deepAK8Cut = deepak8cuts['tight'][self.iov]
+        # self.deepAK8Cut = deepak8cuts['tight'][self.iov]
+        # self.bdisc = btagcuts['medium'][self.iov]
+        
+        
+        
+        
+        # # analysis categories #
+        # self.anacats = anacats
+        # self.label_dict = {i: label for i, label in enumerate(self.anacats)}
+        # self.label_to_int_dict = {label: i for i, label in enumerate(self.anacats)}
+
+        
+        # # systematics
+        # syst_category_strings = ['nominal'] 
+        # if not self.noSyst:
+        #     for s in self.systematics:
+        #         if not 'nominal' in s:
+        #             syst_category_strings.append(s+'Down')
+        #             syst_category_strings.append(s+'Up')
+
+        self.weights = {}
+    
+        
+        
+        self.deepAK8Cut = deepak8cuts['medium'][self.iov]
+        
+        
+        
         self.bdisc = btagcuts['medium'][self.iov]
+        
         
         
         
@@ -149,12 +178,18 @@ class TTbarResProcessor(processor.ProcessorABC):
 
         
         # systematics
-        syst_category_strings = ['nominal'] 
+        syst_category_strings = ['nominal']
         if not self.noSyst:
             for s in self.systematics:
-                if not 'nominal' in s:
-                    syst_category_strings.append(s+'Down')
-                    syst_category_strings.append(s+'Up')
+                if (s != 'nominal'):
+                    
+                    if ('hem' in s):
+                        syst_category_strings.append(s)
+                    else:
+                        syst_category_strings.append(s+'Down')
+                        syst_category_strings.append(s+'Up')
+        
+#         syst_category_strings = ['nominal', 'test1', 'test2', 'test3', 'test4']
         
         
         # axes
@@ -163,7 +198,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         ttbarmass_axis   = hist.axis.Regular(50, 800, 8000, name="ttbarmass", label=r"$m_{t\bar{t}}$ [GeV]")
         jetmass_axis     = hist.axis.Regular(50, 0, 500, name="jetmass", label=r"Jet $m$ [GeV]")
         ttbarmass2D_axis = hist.axis.Regular(20, 800, 8000, name="ttbarmass", label=r"$m_{t\bar{t}}$ [GeV]")
-        jetmass2D_axis   = hist.axis.Regular(20, 0, 500, name="jetmass", label=r"Jet $m_{SD}$ [GeV]")
+        jetmass2D_axis   = hist.axis.Regular(20, 0, 500, name="sdjetmass", label=r"Jet $m_{SD}$ [GeV]")
         jetpt_axis       = hist.axis.Regular(50, 400, 2000, name="jetpt", label=r"Jet $p_{T}$ [GeV]")
         jetp_axis        = hist.axis.Regular(100, 400, 3600, name="jetp", label=r"Jet $p$ [GeV]")
         jeteta_axis      = hist.axis.Regular(50, -2.4, 2.4, name="jeteta", label=r"Jet $\eta$")
@@ -183,7 +218,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             'ttbarmass'  : hist.Hist(syst_axis, cats_axis, ttbarmass2D_axis, storage="weight", name="Counts"),
             'numerator'  : hist.Hist(cats_axis, manual_axis, storage="weight", name="Counts"),
             'denominator': hist.Hist(cats_axis, manual_axis, storage="weight", name="Counts"),
-            'jetmass' : hist.Hist(cats_axis, jetmass2D_axis, storage="weight", name="Counts"),
+            'sdjetmass' : hist.Hist(cats_axis, jetmass2D_axis, storage="weight", name="Counts"),
             'jetpt'  : hist.Hist(cats_axis, jetpt_axis, storage="weight", name="Counts"),
             'jeteta'  : hist.Hist(cats_axis, jeteta_axis, storage="weight", name="Counts"),
             'jetphi'  : hist.Hist(cats_axis, jetphi_axis, storage="weight", name="Counts"),
@@ -230,6 +265,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         # https://github.com/nsmith-/boostedhiggs/blob/master/boostedhiggs/hbbprocessor.py
         
 
+        nEvents = len(events.event)
         
         # Remove events with large weights
         if "QCD" in events.metadata['dataset']: # and ('2017' not in self.iov): 
@@ -248,8 +284,19 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         noCorrections = (not 'jes' in self.systematics and not 'jer' in self.systematics)
 
-        if isData or noCorrections:
-            return self.process_analysis(events, 'nominal')
+        # if isData or noCorrections:
+        #     return self.process_analysis(events, 'nominal')
+
+        if noCorrections or self.noSyst:
+            return self.process_analysis(events, 'nominal', nEvents)
+        
+        
+        if isData:
+            
+            return processor.accumulate([
+                self.process_analysis(events, 'nominal', nEvents),
+                self.process_analysis(events, 'hemVeto', nEvents)
+            ]) 
         
         
         FatJets = events.FatJet
@@ -263,9 +310,9 @@ class TTbarResProcessor(processor.ProcessorABC):
         Jets["p4"]    = ak.with_name(Jets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
 
         
-        FatJets["p4"] = ak.with_name(FatJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
-        GenJets["p4"] = ak.with_name(GenJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
-        Jets["p4"]    = ak.with_name(Jets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
+        # FatJets["p4"] = ak.with_name(FatJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
+        # GenJets["p4"] = ak.with_name(GenJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
+        # Jets["p4"]    = ak.with_name(Jets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
 
         FatJets["matched_gen_0p2"] = FatJets.p4.nearest(GenJets.p4, threshold=0.2)
         FatJets["pt_gen"] = ak.values_astype(ak.fill_none(FatJets.matched_gen_0p2.pt, 0), np.float32)
@@ -292,38 +339,68 @@ class TTbarResProcessor(processor.ProcessorABC):
             ])
             
             
-        if ('hem' in self.systematics) and ('2018' in self.iov):
+        # if ('hem' in self.systematics) and ('2018' in self.iov):
                 
-            corrected_jets    = HEMCleaning(Jets)
-            corrected_fatjets = HEMCleaning(FatJets)
+        #     corrected_jets    = HEMCleaning(Jets)
+        #     corrected_fatjets = HEMCleaning(FatJets)
 
-            corrections.extend([
-            ({"Jet": corrected_jets, "FatJet": corrected_fatjets}, "hem"),
-            ])
+        #     corrections.extend([
+        #     ({"Jet": corrected_jets, "FatJet": corrected_fatjets}, "hem"),
+        #     ])
                 
-        del FatJets, GenJets, Jets
+        # loop through corrections
+        outputs = []
+        for collections, name in corrections:
+            outputs.append(self.process_analysis(update(events, collections), name, nEvents))
+           
+        output_total = processor.accumulate(outputs)                       
+
+                        
+        return output_total
+        
+        # del FatJets, GenJets, Jets
                         
             
 #         print('corrected jets')
 #         print('corr jets', corrected_jets.pt)
             
-        return processor.accumulate(self.process_analysis(update(events, collections), name) for collections, name in corrections)
+        #return processor.accumulate(self.process_analysis(update(events, collections), name) for collections, name in corrections)
 
 
-    def process_analysis(self, events, correction):
+    def process_analysis(self, events, correction, nEvents):
         
                 
-        output = self.histo_dict        
+        # output = self.histo_dict        
         
         dataset = events.metadata['dataset']
         filename = events.metadata['filename']
         
+        isNominal = (correction=='nominal')
         isData = ('JetHT' in dataset) or ('SingleMu' in dataset)
             
 #         # Remove events with large weights
 #         if "QCD" in events.metadata['dataset'] and ('2017' not in self.iov): 
 #             events = events[ events.Generator.binvar > 400 ] 
         
+        if (self.iov == '2018'):
+            
+            if isData:
+                
+                # keep events below 
+                    
+                    
+                events = events[HEMVeto(events.Jet, events.FatJet, events.run)]
+
+
+            else:
+                events = events[HEMVeto(events.Jet, events.FatJet, events.run)]
+                
+        output = self.histo_dict
+
+        if isNominal:
+            output['cutflow']['all events 1'] += nEvents
+
+            
         # lumi mask #
         if (isData):
             
@@ -433,7 +510,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         # event cuts #
         
         # save cutflow
-        if correction == 'nominal':
+        if isNominal:
             cuts = []
             for cut in selection.names:
                 cuts.append(cut)
@@ -878,8 +955,12 @@ class TTbarResProcessor(processor.ProcessorABC):
                                            jetp = ak.flatten(denominator[icat]),
                                            weight = weights.weight()[icat],
                                         )
-                output['jetmass'].fill(anacat = i,
-                                   jetmass = ak.flatten(jetmass[icat]),
+                # output['jetmass'].fill(anacat = i,
+                #                    jetmass = ak.flatten(jetmass[icat]),
+                #                    weight = weights.weight()[icat],
+                #                   )
+                output['sdjetmass'].fill(anacat = i,
+                                   sdjetmass = ak.flatten(jetmsd[icat]),
                                    weight = weights.weight()[icat],
                                   )
                 output['jetpt'].fill(anacat = i,
