@@ -761,8 +761,8 @@ class TTbarResProcessor(processor.ProcessorABC):
             # for mass modification
 
 #             qcdfile = util.load(f'data/corrections/backgroundEstimate/QCD_{self.iov}.coffea')
-            qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
-            qcd_jetmass_bins = qcd_jetmass_dict['bins']
+            # qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
+            # qcd_jetmass_bins = qcd_jetmass_dict['bins']
         
         
 #             # for transfer function
@@ -818,11 +818,11 @@ class TTbarResProcessor(processor.ProcessorABC):
                 # qcd mass modification #
 
                 # get distribution of jet mass in QCD signal ('2t') region
-                qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
+                # qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
 
                 # randomly select jet mass from distribution
-                ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
-                ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
+                # ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
+                # ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
                 
                 
             weights.add('mistag', mistag_weights)
