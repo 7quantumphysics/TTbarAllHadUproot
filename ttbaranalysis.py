@@ -214,9 +214,10 @@ if __name__ == "__main__":
 
                 # coffea output file name
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
-                if args.bkgest: subString += '_bkgest_NoMassMod' # Temporarily turned off mod mass
+                if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
                 # subString += '_blinded'  # Temporary labeling convention for my (AC) personal use
+                subString += '_DeepAK8' # Temporary labeling for making outputs with deepAK8 tagger
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
