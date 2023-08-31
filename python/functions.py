@@ -317,37 +317,37 @@ def getCoffeaFilenames():
                     "F": coffea_dir+'JetHT_2017F_blinded.coffea'
                 },
                 "2018": {
-                    "A": coffea_dir+'JetHT_2018A_blinded.coffea',
-                    "B": coffea_dir+'JetHT_2018B_blinded.coffea',
-                    "C": coffea_dir+'JetHT_2018C_blinded.coffea',
-                    "D": coffea_dir+'JetHT_2018D_blinded.coffea'
+                    "A": coffea_dir+'JetHT_2018A.coffea',
+                    "B": coffea_dir+'JetHT_2018B.coffea',
+                    "C": coffea_dir+'JetHT_2018C.coffea',
+                    "D": coffea_dir+'JetHT_2018D.coffea'
                 }
             },
             "weighted": {
                 "2016APV": {
-                    "B": coffea_dir+'JetHT_2016APVB_bkgest_NoMassMod.coffea',
-                    "C": coffea_dir+'JetHT_2016APVC_bkgest_NoMassMod.coffea',
-                    "D": coffea_dir+'JetHT_2016APVD_bkgest_NoMassMod.coffea',
-                    "E": coffea_dir+'JetHT_2016APVE_bkgest_NoMassMod.coffea',
+                    "B": coffea_dir+'JetHT_2016APVB_bkgest.coffea',
+                    "C": coffea_dir+'JetHT_2016APVC_bkgest.coffea',
+                    "D": coffea_dir+'JetHT_2016APVD_bkgest.coffea',
+                    "E": coffea_dir+'JetHT_2016APVE_bkgest.coffea',
                 },
                 "2016": {
-                    "F": coffea_dir+'JetHT_2016F_bkgest_NoMassMod.coffea',
-                    "G": coffea_dir+'JetHT_2016G_bkgest_NoMassMod.coffea',
-                    "H": coffea_dir+'JetHT_2016H_bkgest_NoMassMod.coffea',
+                    "F": coffea_dir+'JetHT_2016F_bkgest.coffea',
+                    "G": coffea_dir+'JetHT_2016G_bkgest.coffea',
+                    "H": coffea_dir+'JetHT_2016H_bkgest.coffea',
 
                 },
                 "2017": {
-                    "B": coffea_dir+'JetHT_2017B_bkgest_NoMassMod.coffea',
-                    "C": coffea_dir+'JetHT_2017C_bkgest_NoMassMod.coffea',
-                    "D": coffea_dir+'JetHT_2017D_bkgest_NoMassMod.coffea',
-                    "E": coffea_dir+'JetHT_2017E_bkgest_NoMassMod.coffea',
-                    "F": coffea_dir+'JetHT_2017F_bkgest_NoMassMod.coffea'
+                    "B": coffea_dir+'JetHT_2017B_bkgest_blinded.coffea',
+                    "C": coffea_dir+'JetHT_2017C_bkgest_blinded.coffea',
+                    "D": coffea_dir+'JetHT_2017D_bkgest_blinded.coffea',
+                    "E": coffea_dir+'JetHT_2017E_bkgest_blinded.coffea',
+                    "F": coffea_dir+'JetHT_2017F_bkgest_blinded.coffea'
                 },
                 "2018": {
-                    "A": coffea_dir+'JetHT_2018A_bkgest_NoMassMod.coffea',
-                    "B": coffea_dir+'JetHT_2018B_bkgest_NoMassMod.coffea',
-                    "C": coffea_dir+'JetHT_2018C_bkgest_NoMassMod.coffea',
-                    "D": coffea_dir+'JetHT_2018D_bkgest_NoMassMod.coffea'
+                    "A": coffea_dir+'JetHT_2018A_bkgest.coffea',
+                    "B": coffea_dir+'JetHT_2018B_bkgest.coffea',
+                    "C": coffea_dir+'JetHT_2018C_bkgest.coffea',
+                    "D": coffea_dir+'JetHT_2018D_bkgest.coffea'
                 }
             }
         },
@@ -373,20 +373,20 @@ def getCoffeaFilenames():
             },
             "weighted": {
                 "2016APV": {
-                    "700to1000": coffea_dir+'TTbar_2016APV_700to1000_bkgest_NoMassMod.coffea',
-                    "1000toInf": coffea_dir+'TTbar_2016APV_1000toInf_bkgest_NoMassMod.coffea',
+                    "700to1000": coffea_dir+'TTbar_2016APV_700to1000_bkgest.coffea',
+                    "1000toInf": coffea_dir+'TTbar_2016APV_1000toInf_bkgest.coffea',
                 },
                 "2016": {
-                    "700to1000": coffea_dir+'TTbar_2016_700to1000_bkgest_NoMassMod.coffea',
-                    "1000toInf": coffea_dir+'TTbar_2016_1000toInf_bkgest_NoMassMod.coffea',
+                    "700to1000": coffea_dir+'TTbar_2016_700to1000_bkgest.coffea',
+                    "1000toInf": coffea_dir+'TTbar_2016_1000toInf_bkgest.coffea',
                 },
                 "2017": {
-                    "700to1000": coffea_dir+'TTbar_2017_700to1000_bkgest_NoMassMod.coffea',
-                    "1000toInf": coffea_dir+'TTbar_2017_1000toInf_bkgest_NoMassMod.coffea'
+                    "700to1000": coffea_dir+'TTbar_2017_700to1000_bkgest.coffea',
+                    "1000toInf": coffea_dir+'TTbar_2017_1000toInf_bkgest.coffea'
                 },
                 "2018": {
-                    "700to1000": coffea_dir+'TTbar_2018_700to1000_bkgest_NoMassMod.coffea',
-                    "1000toInf": coffea_dir+'TTbar_2018_1000toInf_bkgest_NoMassMod.coffea'
+                    "700to1000": coffea_dir+'TTbar_2018_700to1000_bkgest.coffea',
+                    "1000toInf": coffea_dir+'TTbar_2018_1000toInf_bkgest.coffea'
                 }
                 
             },

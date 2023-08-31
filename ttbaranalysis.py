@@ -44,6 +44,7 @@ if __name__ == "__main__":
     # analysis options
     parser.add_argument('--bkgest', action='store_true', help='run with background estimate')
     parser.add_argument('--noSyst', action='store_true', help='run without systematics')
+    parser.add_argument('--unblind', action='store_true', help='run with unblinded 2017 and/or 2018 data')
 
     # run options
     parser.add_argument('--dask', action='store_true')
@@ -65,6 +66,9 @@ if __name__ == "__main__":
 
     samples = args.dataset
     IOV = args.iov
+    Blinding = True
+    if args.unblind: Blinding = False
+    print('Blinding:', Blinding)
     useDeepAK8 = False
     dask_memory = '3GB' # priority decreases for >2GB memory
     chunksize_dask = 100000
@@ -214,10 +218,12 @@ if __name__ == "__main__":
 
                 # coffea output file name
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
+                if args.noSyst: subString += '_noSyst'
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
-                # subString += '_blinded'  # Temporary labeling convention for my (AC) personal use
-                subString += '_DeepAK8' # Temporary labeling for making outputs with deepAK8 tagger
+                if Blinding and ('2016' not in IOV):
+                    subString += '_blinded'
+                if useDeepAK8: subString += '_DeepAK8' # Temporary labeling for making outputs with deepAK8 tagger
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
@@ -239,6 +245,7 @@ if __name__ == "__main__":
                                                              iov=IOV,
                                                              bkgEst=args.bkgest,
                                                              noSyst=args.noSyst,
+                                                             blinding=Blinding,
                                                              useDeepAK8=useDeepAK8,
                                                              anacats=anacats,
                                                              systematics=systematics,
@@ -312,6 +319,7 @@ if __name__ == "__main__":
                                                           iov=IOV,
                                                           bkgEst=args.bkgest,
                                                           noSyst=args.noSyst,
+                                                          blinding=Blinding,
                                                           useDeepAK8=useDeepAK8,
                                                           anacats=anacats,
                                                           systematics=systematics,
