@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore")
 
 savedir = 'outputs/'
 
-from ttbarprocessor import TTbarResProcessor
+# from ttbarprocessor import TTbarResProcessor
 
 if __name__ == "__main__":
     
@@ -45,11 +45,14 @@ if __name__ == "__main__":
     parser.add_argument('--bkgest', action='store_true', help='run with background estimate')
     parser.add_argument('--noSyst', action='store_true', help='run without systematics')
     parser.add_argument('--unblind', action='store_true', help='run with unblinded 2017 and/or 2018 data')
+    parser.add_argument('--noMM',    action='store_true', help='Turn off QCD mass modification for bkgest')
+    parser.add_argument('--deepak8', action='store_true', help='run with DeepAK8 tagger')
 
     # run options
     parser.add_argument('--dask', action='store_true')
     parser.add_argument('--env', choices=['casa', 'lpc', 'winterfell', 'C', 'L', 'W'], default='lpc')
     parser.add_argument('--test', action='store_true')
+    parser.add_argument('--OW', action='store_true')
     parser.add_argument('-n', '--nocluster', action='store_true', help='use client=Client() if LPCCondorCluster is slow')
 
     args = parser.parse_args()
@@ -61,15 +64,22 @@ if __name__ == "__main__":
     if args.dask and (args.env == 'lpc' or args.env == 'L'):
         from lpcjobqueue import LPCCondorCluster
     
-    
+    if args.OW:
+        from ttbarprocessor_OW import TTbarResProcessor
+    else:
+        from ttbarprocessor import TTbarResProcessor
     ##### parameters #####
 
     samples = args.dataset
     IOV = args.iov
     Blinding = True
+    MassModOn = True
     if args.unblind: Blinding = False
+    if args.noMM: MassModOn = False
     print('Blinding:', Blinding)
     useDeepAK8 = False
+    if args.deepak8:
+        useDeepAK8 = True
     dask_memory = '3GB' # priority decreases for >2GB memory
     chunksize_dask = 100000
     chunksize_futures = 10000
@@ -166,7 +176,9 @@ if __name__ == "__main__":
     }
     
     # directories and files for dask
-    upload_to_dask = ['data', 'python', 'ttbarprocessor.py']
+    if args.OW: uploadfile = 'ttbarprocessor_OW.py'
+    else: uploadfile = 'ttbarprocessor.py'
+    upload_to_dask = ['data', 'python', uploadfile]
 
     
     
@@ -218,12 +230,15 @@ if __name__ == "__main__":
 
                 # coffea output file name
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
+#                 if args.OW: subString += '_OW'
                 if args.noSyst: subString += '_noSyst'
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
-                if Blinding and ('2016' not in IOV):
+                if Blinding and (('2016' not in IOV) and ('JetHT' in args.dataset)):
                     subString += '_blinded'
                 if useDeepAK8: subString += '_DeepAK8' # Temporary labeling for making outputs with deepAK8 tagger
+                if not MassModOn: subString += '_noMassMod'
+                # subString += '_sumw' # Temp label for testing earlier sumw calculation
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
@@ -246,6 +261,7 @@ if __name__ == "__main__":
                                                              bkgEst=args.bkgest,
                                                              noSyst=args.noSyst,
                                                              blinding=Blinding,
+                                                             MassMod=MassModOn,
                                                              useDeepAK8=useDeepAK8,
                                                              anacats=anacats,
                                                              systematics=systematics,
@@ -254,7 +270,7 @@ if __name__ == "__main__":
                                                             ),
                         executor=processor.futures_executor,
                         executor_args={
-                                "skipbadfiles": True,
+                                "skipbadfiles": False,
                                 "savemetrics": True,
                                 "schema": NanoAODSchema,
                                 "workers":4
@@ -293,7 +309,7 @@ if __name__ == "__main__":
                             executor=processor.DaskExecutor(client=client, retries=12,),
                             schema=NanoAODSchema,
                             savemetrics=True,
-                            skipbadfiles=True,
+                            skipbadfiles=False,
                             chunksize=chunksize_dask,
                             maxchunks=maxchunks,
                         )
@@ -320,6 +336,7 @@ if __name__ == "__main__":
                                                           bkgEst=args.bkgest,
                                                           noSyst=args.noSyst,
                                                           blinding=Blinding,
+                                                          MassMod=MassModOn,
                                                           useDeepAK8=useDeepAK8,
                                                           anacats=anacats,
                                                           systematics=systematics,

@@ -273,7 +273,6 @@ def GetPDFWeights(events):
 
 
 def getMETFilter(IOV, events):
- 
     # Reference: https://twiki.cern.ch/twiki/bin/viewauth/CMS/MissingETOptionalFiltersRun2#2018_2017_data_and_MC_UL
     MET_filters = {'2016APV': [
                                 "goodVertices",

@@ -68,7 +68,7 @@ def update(events, collections):
 """Package to perform the data-driven mistag-rate-based ttbar hadronic analysis. """
 class TTbarResProcessor(processor.ProcessorABC):
     def __init__(self,
-                 htCut=1400.,
+                 htCut=950.,
                  ak8PtMin=400.,
                  minMSD=105.,
                  maxMSD=210.,
@@ -77,6 +77,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                  deepAK8Cut='tight',
                  useDeepAK8=False,
                  blinding=True,
+                 MassMod=True,
                  iov='2016',
                  bkgEst=False,
                  noSyst=False,
@@ -97,6 +98,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         self.bkgEst = bkgEst
         self.noSyst = noSyst
         self.blinding = blinding
+        self.MassMod = MassMod
         self.systematics = systematics
         #self.rpf_params = rpf_params        
         
@@ -192,14 +194,15 @@ class TTbarResProcessor(processor.ProcessorABC):
                         syst_category_strings.append(s+'Up')
         
 #         syst_category_strings = ['nominal', 'test1', 'test2', 'test3', 'test4']
-        
-        
+        manual_jetht_bins = [800, 840, 880, 920, 960, 1000, 1050, 1100, 1150, 1200, 1250, 1300, 1350, 1400, 1600, 1800]
+    
         # axes
         dataset_axis     = hist.axis.StrCategory([], growth=True, name="dataset", label="Primary Dataset")
         syst_axis        = hist.axis.StrCategory(syst_category_strings, name="systematic")
         ttbarmass_axis   = hist.axis.Regular(50, 800, 8000, name="ttbarmass", label=r"$m_{t\bar{t}}$ [GeV]")
         jetmass_axis     = hist.axis.Regular(50, 0, 500, name="jetmass", label=r"Jet $m$ [GeV]")
         ttbarmass2D_axis = hist.axis.Regular(20, 800, 8000, name="ttbarmass", label=r"$m_{t\bar{t}}$ [GeV]")
+        jetHT2D_axis     = hist.axis.Variable(manual_jetht_bins, name = "Jet_HT", label = r'$AK4\ Jet\ HT$')
         jetmass2D_axis   = hist.axis.Regular(20, 0, 500, name="sdjetmass", label=r"Jet $m_{SD}$ [GeV]")
         jetpt_axis       = hist.axis.Regular(50, 400, 2000, name="jetpt", label=r"Jet $p_{T}$ [GeV]")
         jetp_axis        = hist.axis.Regular(100, 400, 3600, name="jetp", label=r"Jet $p$ [GeV]")
@@ -227,6 +230,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             'jeteta'  : hist.Hist(cats_axis, jeteta_axis, storage="weight", name="Counts"),
             'jetphi'  : hist.Hist(cats_axis, jetphi_axis, storage="weight", name="Counts"),
             'jetp'  : hist.Hist(cats_axis, jetp_axis, storage="weight", name="Counts"),
+            'jetp_m' : hist.Hist(cats_axis, manual_axis, storage="weight", name="Counts"),
             'discriminators'  : hist.Hist(cats_axis,
                                           jetp_axis,
                                           btag_axis,
@@ -240,7 +244,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                                           storage="weight", name="Counts"),
             
             
-            #'mtt_vs_mt' : hist.Hist(syst_axis, cats_axis, jetmass2D_axis, ttbarmass2D_axis, storage="weight", name="Counts"),
+            'mtt_vs_HT' : hist.Hist(syst_axis, cats_axis, ttbarmass2D_axis, jetHT2D_axis, storage="weight", name="Counts"),
 
             
             'deepak8_over_jetp': hist.Hist(cats_axis, ttag_axis, jetp_axis, storage="weight", name="Counts"),
@@ -270,6 +274,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
 
         nEvents = len(events.event)
+        
         # print('================================== FIRST LINE ========================================\n')
         # print('# of events before cut:', nEvents)
         # print('All Gen weights: ', ak.sort(events.genWeight, ascending=False))
@@ -278,18 +283,19 @@ class TTbarResProcessor(processor.ProcessorABC):
         # print('Largest Gen weight kept = ', ak.max(events.genWeight[events.Generator.binvar > 400]))
         # print('# of events to be removed from variation cut:', len(events.event)-len(events[ events.Generator.binvar > 400 ].event))
         # Remove events with large weights
-        if "QCD" in events.metadata['dataset']: # and ('2017' not in self.iov): 
-            # events = events[ events.Generator.binvar > 400 ]
-            # print('# of events after variation of 400 cut:', len(events.event))
-            if events.metadata['dataset'] not in self.means_stddevs : 
-                average = np.average( events.genWeight )
-                stddev = np.std( events.genWeight )
-                self.means_stddevs[events.metadata['dataset']] = (average, stddev) #Defines structure/order of default dict
-            average,stddev = self.means_stddevs[events.metadata['dataset']] #Assigns variables
-            # print('Average Gen weight after variation of 400 cut:', average)
-            vals = (events.genWeight - average ) / stddev # is variation within some stddev ?
-            # print('Gen weights removed; larger than 2 sigma:', ak.sort(events.genWeight[(np.abs(vals) < 2)], ascending=False))
-            events = events[(vals < 2)] # Only accept gen weights within 2 stddev of average
+        # if "QCD" in events.metadata['dataset']: # and ('2017' not in self.iov): 
+        #     events = events[ events.Generator.binvar > 600 ]
+        #     # print('# of events after variation of 400 cut:', len(events.event))
+        #     if events.metadata['dataset'] not in self.means_stddevs : 
+        #         average = np.average( events.genWeight )
+        #         stddev = np.std( events.genWeight )
+        #         self.means_stddevs[events.metadata['dataset']] = (average, stddev) #Defines structure/order of default dict
+        #     average,stddev = self.means_stddevs[events.metadata['dataset']] #Assigns variables
+        #     # print('Average Gen weight after variation of 400 cut:', average)
+        #     vals = (events.genWeight - average ) / stddev # is variation within some stddev ?
+        # #     # print('Gen weights removed; larger than 2 sigma:', ak.sort(events.genWeight[(np.abs(vals) < 2)], ascending=False))
+        #     events = events[(vals < 2)] # Only accept gen weights within 2 stddev of average
+            # print('Average Gen weight after sigma cut:', np.average( events.genWeight ))
             # print('Gen weights kept:', ak.sort(events.genWeight, ascending=False))
             # print('# of events that go to pre-selection:', len(events.event))
             # print('\n================================== LAST LINE ========================================\n\n')
@@ -318,24 +324,16 @@ class TTbarResProcessor(processor.ProcessorABC):
         GenJets = events.GenJet
         Jets = events.Jet
         
-                
-        
         FatJets["p4"] = ak.with_name(FatJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
         GenJets["p4"] = ak.with_name(GenJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
         Jets["p4"]    = ak.with_name(Jets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
-
-        
-        # FatJets["p4"] = ak.with_name(FatJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
-        # GenJets["p4"] = ak.with_name(GenJets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
-        # Jets["p4"]    = ak.with_name(Jets[["pt", "eta", "phi", "mass"]],"PtEtaPhiMLorentzVector")
 
         FatJets["matched_gen_0p2"] = FatJets.p4.nearest(GenJets.p4, threshold=0.2)
         FatJets["pt_gen"] = ak.values_astype(ak.fill_none(FatJets.matched_gen_0p2.pt, 0), np.float32)
 
         Jets["matched_gen_0p2"] = Jets.p4.nearest(GenJets.p4, threshold=0.2)
         Jets["pt_gen"] = ak.values_astype(ak.fill_none(Jets.matched_gen_0p2.pt, 0), np.float32)
-
-
+        
         corrected_fatjets = GetJECUncertainties(FatJets, events, self.iov, R='AK8', isData=isData)
         corrected_jets = GetJECUncertainties(Jets, events, self.iov, R='AK4', isData=isData)
         
@@ -382,8 +380,6 @@ class TTbarResProcessor(processor.ProcessorABC):
             if isData:
                 
                 # keep events below 
-                    
-                    
                 events = events[HEMVeto(events.Jet, events.FatJet, events.run)]
 
 
@@ -392,8 +388,11 @@ class TTbarResProcessor(processor.ProcessorABC):
                 
         output = self.histo_dict
 
-        if isNominal:
-            output['cutflow']['all events 1'] += nEvents
+        # if isNominal:
+        #     output['cutflow']['all events'] += nEvents
+        #     if not isData:
+        #         output['cutflow']['sumw'] += np.sum(events.genWeight)
+        #         print('SumW before change to LHE: ', np.sum(events.genWeight))
             
         # lumi mask #
         if (isData):
@@ -405,18 +404,17 @@ class TTbarResProcessor(processor.ProcessorABC):
         # event selection #
         selection = PackedSelection()
         
-
         # Remove events with large weights
-        # if "QCD" in events.metadata['dataset']: # and ('2017' not in self.iov): 
-        #     events = events[ events.Generator.binvar > 400 ]
+        if "QCD" in events.metadata['dataset']: # and ('2017' not in self.iov): 
+            events = events[ events.Generator.binvar > 400 ]
         
-        #     if events.metadata['dataset'] not in self.means_stddevs : 
-        #         average = np.average( events.genWeight )
-        #         stddev = np.std( events.genWeight )
-        #         self.means_stddevs[events.metadata['dataset']] = (average, stddev)            
-        #     average,stddev = self.means_stddevs[events.metadata['dataset']]
-        #     vals = (events.genWeight - average ) / stddev
-        #     events = events[(np.abs(vals) < 2)]
+            if events.metadata['dataset'] not in self.means_stddevs : 
+                average = np.average( events.genWeight )
+                stddev = np.std( events.genWeight )
+                self.means_stddevs[events.metadata['dataset']] = (average, stddev)            
+            average,stddev = self.means_stddevs[events.metadata['dataset']]
+            vals = (events.genWeight - average ) / stddev
+            events = events[(vals < 2)]
 
         
         
@@ -438,7 +436,9 @@ class TTbarResProcessor(processor.ProcessorABC):
             }
                         
             selection.add('trigger', events.HLT[triggernames[self.iov][0]])
-            
+            print('Data Selection Updated:', selection.names)
+            print(events.HLT[triggernames[self.iov][0]])
+            print(len(events.HLT[triggernames[self.iov][0]]), '\n')
 
         # objects #
         
@@ -467,43 +467,63 @@ class TTbarResProcessor(processor.ProcessorABC):
                 evtweights = events.genWeight
             else: 
                 evtweights = events.LHEWeight_originalXWGTUP
+                print('LHE event weights used: ', evtweights)
+                print('Generator events replaced: ', events.genWeight)
+                if isNominal:
+                    print('SumW after change to LHE: ', np.sum(evtweights))
+                    print('-----------------------\n')
+                
+#                 print('LHE weight: ', evtweights)
+
         if correction == 'nominal':
             output['cutflow']['all events'] += len(FatJets)
             output['cutflow']['sumw'] += np.sum(evtweights)
             output['cutflow']['sumw2'] += np.sum(evtweights**2)
-        
               
         
         # ---- event selection and object selection ---- #
         
-
         
         # ht cut #
-        selection.add('htCut',
-            ak.sum(Jets.pt, axis=1) > self.htCut
-        )
+        # selection.add('htCut', ak.sum(Jets.pt, axis=1) > self.htCut)
+        # print('Selection updated:', selection.names)
+        # cut2 = selection.all()
+        # cut2_htonly = ak.sum(Jets[cut1].pt, axis=1) > self.htCut
+        # print('FatJet pt after trigger selection and htCut w PK:  ', FatJets[cut2].pt)
+        # print(len(FatJets[cut2].pt))
+        # print('FatJet pt after trigger selection and htCut wo PK: ', (FatJets[cut1])[cut2_htonly].pt)
+        # print(len((FatJets[cut1])[cut2_htonly].pt))
+        # print('---------')
 
         # met filters #
         if isData:
             selection.add('metfilter', getMETFilter(self.iov, events))
-                
+            print('Data Selection Updated:', selection.names)
+            print(getMETFilter(self.iov, events))
+            print(len(getMETFilter(self.iov, events)), '\n')
+            
         # jet id #
-        selection.add('jetid', ak.any((FatJets.jetId > 0), axis=1))
-        FatJets = FatJets[FatJets.jetId > 0]
-                
+        selection.add('jetid', ak.all(FatJets.jetId > 0, axis=1)) # Will this not always be true?
+        print('Selection updated:', selection.names)
+        print(getMETFilter(self.iov, events))
+        print(len(getMETFilter(self.iov, events)), '\n')
+        
+        
         # jet kinematics # 
         jetkincut = (FatJets.pt > self.ak8PtMin) & (np.abs(getRapidity(FatJets.p4)) < 2.4)
-        
-        selection.add('jetkincut', ak.any(jetkincut, axis=1))
-        FatJets = FatJets[jetkincut]
+        print('jetkincut = ', ak.all(jetkincut, axis=1))
+        selection.add('jetkincut', ak.all(jetkincut, axis=1))
+        print('Selection updated:', selection.names)
+#         FatJets = FatJets[jetkincut]
+        print(len(ak.all(jetkincut, axis=1)), '\n')
         del jetkincut
         
         
         # at least 2 ak8 jets #
+        #twoFatJets = (ak.num(FatJets) >= 2)
         selection.add('twoFatJets', (ak.num(FatJets) >= 2))
-        
-
-        # event cuts #
+        print('Selection updated:', selection.names)
+        print((ak.num(FatJets) >= 2), '\n')
         
         # save cutflow
         if isNominal:
@@ -513,6 +533,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                 output['cutflow'][cut] += len(FatJets[selection.all(*cuts)])
             del cuts
         
+        # ht cut #
+        # selection.add('htCut', ak.sum(Jets.pt, axis=1) > self.htCut)
+        
+        print('Final pre-selection is to apply HT cut...')
         eventCut = selection.all(*selection.names)
         FatJets = FatJets[eventCut]
         SubJets = SubJets[eventCut]
@@ -520,8 +544,21 @@ class TTbarResProcessor(processor.ProcessorABC):
         evtweights = evtweights[eventCut]
         events = events[eventCut]
 
+        # len(events)
+
+        passHT = ak.sum(Jets.pt, axis=1) > self.htCut
+        FatJets = FatJets[passHT]
+        SubJets = SubJets[passHT]
+        Jets    = Jets[passHT]
+        evtweights = evtweights[passHT]
+        events = events[passHT]
+        if isNominal:
+            output['cutflow']['passHT cut'] += len(FatJets)
+        # len(events)
+        
         if not isData: GenJets = GenJets[eventCut]
-            
+        print('All Kinematic Selections Applied\n')
+        del eventCut, passHT
 
         # ---- ttbar candidates ---- #
         
@@ -691,18 +728,16 @@ class TTbarResProcessor(processor.ProcessorABC):
         if (self.bkgEst):
 
             # for mistag rate weights
-            mistag_rate_df = pd.read_csv(f'data/corrections/backgroundEstimate/mistag_rate_{self.iov}.csv')
+            mistag_rate_df = pd.read_csv(f'data/corrections/backgroundEstimate/mistag_rate_{self.iov}_inc.csv')
             pbins = mistag_rate_df['jetp bins'].values
             mistag_weights = np.ones(len(FatJets), dtype=float)
             
             
             # for mass modification
-
-#             qcdfile = util.load(f'data/corrections/backgroundEstimate/QCD_{self.iov}.coffea')
-            qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
-            qcd_jetmass_bins = qcd_jetmass_dict['bins']
-        
-                     
+            if self.MassMod:
+                
+            	qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
+            	qcd_jetmass_bins = qcd_jetmass_dict['bins']
     
             for ilabel,icat in labels_and_categories.items():
             
@@ -712,11 +747,13 @@ class TTbarResProcessor(processor.ProcessorABC):
                 # ilabel[-5:] = bcat + ycat (0bcen for example)
                 label_at = 'at'+ilabel[-5:]
                 label_2t = '2t'+ilabel[-5:]
+                label_inc = ilabel[-5:-3]
+#                 print(label_inc)
                 
                 
                 # get mistag rate for antitag region
                 #print(mistag_rate_df[label_at])
-                mistag_rate = mistag_rate_df[label_at].values
+                mistag_rate = mistag_rate_df[label_inc].values
                 #print(mistag_rate)
                 
                 # get p bin for probe jet p
@@ -728,13 +765,14 @@ class TTbarResProcessor(processor.ProcessorABC):
 
 
                 # qcd mass modification #
-
-                # get distribution of jet mass in QCD signal ('2t') region
-                qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
-
-                # randomly select jet mass from distribution
-                ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
-                ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
+                if self.MassMod:
+                    
+                    # get distribution of jet mass in QCD signal ('2t') region
+                    qcd_jetmass_counts = qcd_jetmass_dict[label_2t]
+                    
+                    # randomly select jet mass from distribution
+                    ModMass_hist_dist = ss.rv_histogram([qcd_jetmass_counts[:-1], qcd_jetmass_bins])
+                    ttbarcands.slot1.p4[icat]["fMass"] = ModMass_hist_dist.rvs(size=len(ttbarcands.slot1.p4[icat]))
                 
                 
             weights.add('mistag', mistag_weights)
@@ -967,7 +1005,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
 
-
+        print(output['cutflow'])
         return output
 
     def postprocess(self, accumulator):
