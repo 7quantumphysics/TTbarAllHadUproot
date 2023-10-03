@@ -43,6 +43,7 @@ if __name__ == "__main__":
 
     # analysis options
     parser.add_argument('--bkgest', action='store_true', help='run with background estimate')
+    parser.add_argument('--sideband', action='store_true', help='Use Sideband Soft Drop Window for Closure Test')
     parser.add_argument('--noSyst', action='store_true', help='run without systematics')
     parser.add_argument('--unblind', action='store_true', help='run with unblinded 2017 and/or 2018 data')
     parser.add_argument('--noMM',    action='store_true', help='Turn off QCD mass modification for bkgest')
@@ -125,7 +126,15 @@ if __name__ == "__main__":
         'pdf',
         'q2',
         'btag',
+        'toptagsf',
+        'toptagxs',
+        'lumi'
     ]
+
+    # systematics = [
+    #     'nominal',
+    #     'btag',
+    # ]
     
     if ('2016' in IOV) or ('2017' in IOV): systematics.append('prefiring')
     if '2018' in IOV: systematics.append('hem')
@@ -232,6 +241,7 @@ if __name__ == "__main__":
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
 #                 if args.OW: subString += '_OW'
                 if args.noSyst: subString += '_noSyst'
+                if args.sideband: subString += '_sbTagDef'
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
                 if Blinding and (('2016' not in IOV) and ('JetHT' in args.dataset)):
@@ -259,6 +269,7 @@ if __name__ == "__main__":
                         processor_instance=TTbarResProcessor(
                                                              iov=IOV,
                                                              bkgEst=args.bkgest,
+                					     Sideband=args.sideband,
                                                              noSyst=args.noSyst,
                                                              blinding=Blinding,
                                                              MassMod=MassModOn,
@@ -334,6 +345,7 @@ if __name__ == "__main__":
                                                       processor_instance=TTbarResProcessor(
                                                           iov=IOV,
                                                           bkgEst=args.bkgest,
+                                                          Sideband=args.sideband,
                                                           noSyst=args.noSyst,
                                                           blinding=Blinding,
                                                           MassMod=MassModOn,
