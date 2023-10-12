@@ -882,7 +882,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                 del btag_wgts_nom, btag_wgts_up, btag_wgts_down
                 del btag_wgts_nom_bcats, btag_wgts_up_bcats, btag_wgts_down_bcats
                 
-            if 'toptagsf' in self.systematics:
+            if 'toptagsf' in self.systematics and 'TTbar' in dataset:
                 
                 toptagNom  = np.ones(len(events))
                 toptagUp   = np.ones(len(events))
