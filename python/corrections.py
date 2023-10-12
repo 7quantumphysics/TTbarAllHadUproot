@@ -380,5 +380,40 @@ def GetQ2weights(events):
             scales = events.LHEScaleWeight[:,[0,1,3,4,6,7]]
             q2Up = ak.max(scales,axis=1)
             q2Down = ak.min(scales,axis=1)
-     
+    
     return q2Nom, q2Up, q2Down
+
+def GetTopTagSFweights(toptags):
+
+    toptag1, toptag2 = toptags
+
+    sfweightsNom = np.where(toptag1, 0.9, 1.)
+    sfweightsUp = np.where(toptag1, 0.9*1.25, 1.)
+    sfweightsDown = np.where(toptag1, 0.9*0.75, 1.)
+
+    sfweightsNom = np.where(toptag2, 0.9**2, sfweightsNom)
+    sfweightsUp = np.where(toptag2, (0.9*1.25)**2, sfweightsUp)
+    sfweightsDown = np.where(toptag2, (0.9*0.75)**2, sfweightsDown)
+
+    return sfweightsNom, sfweightsUp, sfweightsDown
+
+def GetLumiweights(IOV):
+    # if '2016' in IOV:
+    #     lumiUp = 1.012*np.ones(len)
+    #     lumiDown = 0.988
+    # elif '2017' in IOV:
+    #     lumiUp = 1.023
+    #     lumiDown = 0.977
+    # elif '2018' in IOV:
+    #     lumiUp = 1.025
+    #     lumiDown = 0.975
+    # else:
+    #     print('Couldn\'t find luminosity weights')
+
+    lumiUp = np.where('2016' in IOV, 1.012, np.where(IOV=='2017', 1.023, np.where(IOV=='2018', 1.025, None)))
+    lumiDown = np.where('2016' in IOV, 0.988, np.where(IOV=='2017', 0.977, np.where(IOV=='2018', 0.975, None)))
+    
+    # if ak.any(lumiUp) == None or ak.any(lumiDown) == None:
+    #     print('Couldn\'t find luminosity weights')
+
+    return lumiUp, lumiDown

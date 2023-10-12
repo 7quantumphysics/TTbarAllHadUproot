@@ -29,7 +29,7 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
 
         """
         ******************************************************************************************************
-        btag_wgts['mb'][n] --> w(n|m) --> "Probability" of n number of b-tags given m number of b-tagged jets
+        btag_wgts['mb'][n] --> w(n|m) --> "Probability" of n number of b-tags given m number of "true" b jets
         ------------------------------------------------------------------------------------------------------
         w(0|0) = 1
 
@@ -46,8 +46,8 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
 
         # ---- Use the leading subjet again to get the scale factors ---- #
         
-        LeadingSubjet_s0 = np.where(SubJet01.btagCSVV2>SubJet02.btagCSVV2, SubJet01, SubJet02)
-        LeadingSubjet_s1 = np.where(SubJet11.btagCSVV2>SubJet12.btagCSVV2, SubJet11, SubJet12)
+        LeadingSubjet_s0 = np.where(SubJet01.btagDeepB>SubJet02.btagDeepB, SubJet01, SubJet02)
+        LeadingSubjet_s1 = np.where(SubJet11.btagDeepB>SubJet12.btagDeepB, SubJet11, SubJet12)
      
         # ---- Define the BSF for each of the two fatjets ---- #
         SF_filename = 'data/corrections/subjet_btagging.json.gz'
@@ -113,12 +113,12 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
         btag_wgts['0b'][0] = np.where(btag0, np.ones_like(BSF_s0), 0.)
 
         # ---- w(0|1) and w(1|1) ---- # 
-        btag_wgts['1b'][0] = np.where(btag1, np.where(btag_s0, 1.-BSF_s0, 1.-BSF_s1), 0.)
+        btag_wgts['1b'][0] = np.where(btag0, np.where(btag_s0, 1.-BSF_s0, 1.-BSF_s1), 0.)
         btag_wgts['1b'][1] = np.where(btag1, np.where(btag_s0, BSF_s0, BSF_s1), 0.)
 
         # ---- w(0|2), w(1|2), w(2|2) ---- # 
-        btag_wgts['2b'][0] = np.where(btag2, (1 - BSF_s0)*(1 - BSF_s1), 0.) 
-        btag_wgts['2b'][1] = np.where(btag2, (1 - BSF_s0)*BSF_s1 + BSF_s0*(1 - BSF_s1), 0.) 
+        btag_wgts['2b'][0] = np.where(btag0, (1 - BSF_s0)*(1 - BSF_s1), 0.) 
+        btag_wgts['2b'][1] = np.where(btag1, (1 - BSF_s0)*BSF_s1 + BSF_s0*(1 - BSF_s1), 0.) 
         btag_wgts['2b'][2] = np.where(btag2, BSF_s0*BSF_s1, 0.) 
 
         # ---- 'Matrix Multiplied' weights to apply to each b-tag region ---- #
@@ -137,21 +137,21 @@ def btagCorrections(btags, subjets, isData, bdisc, sysType='central'):
         Btag_wgts['2b'] = Wgts_to_2btag_region_nonzero
         
         
-#         print("Btag_wgts['0b']", Btag_wgts['0b'])
-#         print("len Btag_wgts['0b']", len(Btag_wgts['0b']))
-#         print("count Btag_wgts['0b']", ak.count(Btag_wgts['0b']))
-#         print("len events", len(btag0))
+        # print("Btag_wgts['0b']", Btag_wgts['0b'])
+        # print("len Btag_wgts['0b']", len(Btag_wgts['0b']))
+        # print("count Btag_wgts['0b']", ak.count(Btag_wgts['0b']))
+        # print("len events", len(btag0))
         
         
-#         print("Btag_wgts['1b']", Btag_wgts['1b'])
-#         print("len Btag_wgts['1b']", len(Btag_wgts['1b']))
-#         print("count Btag_wgts['1b']", ak.count(Btag_wgts['1b']))
-#         print("len events", len(btag0))
+        # print("Btag_wgts['1b']", Btag_wgts['1b'])
+        # print("len Btag_wgts['1b']", len(Btag_wgts['1b']))
+        # print("count Btag_wgts['1b']", ak.count(Btag_wgts['1b']))
+        # print("len events", len(btag0))
         
-#         print("Btag_wgts['2b']", Btag_wgts['2b'])
-#         print("len Btag_wgts['2b']", len(Btag_wgts['2b']))
-#         print("count Btag_wgts['2b']", ak.count(Btag_wgts['2b']))
-#         print("len events", len(btag0))
+        # print("Btag_wgts['2b']", Btag_wgts['2b'])
+        # print("len Btag_wgts['2b']", len(Btag_wgts['2b']))
+        # print("count Btag_wgts['2b']", ak.count(Btag_wgts['2b']))
+        # print("len events", len(btag0))
         
 
 
