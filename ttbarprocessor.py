@@ -39,6 +39,8 @@ from corrections import (
     GetPDFWeights,
     GetPUSF,
     GetQ2weights,
+    GetTopTagSFweights,
+    GetLumiweights,
     getLumiMaskRun2,
     getMETFilter,
     pTReweighting,
@@ -68,7 +70,7 @@ def update(events, collections):
 """Package to perform the data-driven mistag-rate-based ttbar hadronic analysis. """
 class TTbarResProcessor(processor.ProcessorABC):
     def __init__(self,
-                 htCut=950.,
+                 htCut=950., #1400.,
                  ak8PtMin=400.,
                  minMSD=105.,
                  maxMSD=210.,
@@ -80,6 +82,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                  MassMod=True,
                  iov='2016',
                  bkgEst=False,
+                 Sideband=False,
                  noSyst=False,
                  systematics = ['nominal', 'pileup'],
                  anacats = ['2t0bcen'],
@@ -96,6 +99,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         self.useDeepAK8 = useDeepAK8
         self.means_stddevs = defaultdict()
         self.bkgEst = bkgEst
+        self.Sideband = Sideband
         self.noSyst = noSyst
         self.blinding = blinding
         self.MassMod = MassMod
@@ -139,40 +143,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                 '2018':    0.4506,
             } 
         }
-    
-        
-        # self.deepAK8Cut = deepak8cuts['tight'][self.iov]
-        # self.bdisc = btagcuts['medium'][self.iov]
-        
-        
-        
-        
-        # # analysis categories #
-        # self.anacats = anacats
-        # self.label_dict = {i: label for i, label in enumerate(self.anacats)}
-        # self.label_to_int_dict = {label: i for i, label in enumerate(self.anacats)}
-
-        
-        # # systematics
-        # syst_category_strings = ['nominal'] 
-        # if not self.noSyst:
-        #     for s in self.systematics:
-        #         if not 'nominal' in s:
-        #             syst_category_strings.append(s+'Down')
-        #             syst_category_strings.append(s+'Up')
 
         self.weights = {}
-    
-        
-        
         self.deepAK8Cut = deepak8cuts['medium'][self.iov]
-        
-        
-        
         self.bdisc = btagcuts['medium'][self.iov]
-        
-        
-        
         
         
         # analysis categories #
@@ -388,10 +362,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                 
         output = self.histo_dict
 
-        # if isNominal:
-        #     output['cutflow']['all events'] += nEvents
-        #     if not isData:
-        #         output['cutflow']['sumw'] += np.sum(events.genWeight)
+        if isNominal:
+            output['cutflow']['all events'] += nEvents
+            if not isData:
+                output['cutflow']['sumw'] += np.sum(events.genWeight)
         #         print('SumW before change to LHE: ', np.sum(events.genWeight))
             
         # lumi mask #
@@ -428,17 +402,17 @@ class TTbarResProcessor(processor.ProcessorABC):
             
             triggernames = { 
             
-            "2016APV": ["PFHT900"],
-            "2016" : ["PFHT900"],
+            "2016APV": ["PFHT900"],#, "AK8PFJet450", "AK8PFJet360_TrimMass30"],
+            "2016" : ["PFHT900"],#, "AK8PFJet450", "AK8PFJet360_TrimMass30"],
             "2017" : ["PFHT1050"],
             "2018" : ["PFHT1050"],
         
             }
                         
             selection.add('trigger', events.HLT[triggernames[self.iov][0]])
-            print('Data Selection Updated:', selection.names)
-            print(events.HLT[triggernames[self.iov][0]])
-            print(len(events.HLT[triggernames[self.iov][0]]), '\n')
+            # print('Data Selection Updated:', selection.names)
+            # print(events.HLT[triggernames[self.iov][0]])
+            # print(len(events.HLT[triggernames[self.iov][0]]), '\n')
 
         # objects #
         
@@ -477,8 +451,8 @@ class TTbarResProcessor(processor.ProcessorABC):
 
         if correction == 'nominal':
             output['cutflow']['all events'] += len(FatJets)
-            output['cutflow']['sumw'] += np.sum(evtweights)
-            output['cutflow']['sumw2'] += np.sum(evtweights**2)
+            # output['cutflow']['sumw'] += np.sum(evtweights)
+            # output['cutflow']['sumw2'] += np.sum(evtweights**2)
               
         
         # ---- event selection and object selection ---- #
@@ -498,32 +472,32 @@ class TTbarResProcessor(processor.ProcessorABC):
         # met filters #
         if isData:
             selection.add('metfilter', getMETFilter(self.iov, events))
-            print('Data Selection Updated:', selection.names)
-            print(getMETFilter(self.iov, events))
-            print(len(getMETFilter(self.iov, events)), '\n')
+            # print('Data Selection Updated:', selection.names)
+            # print(getMETFilter(self.iov, events))
+            # print(len(getMETFilter(self.iov, events)), '\n')
             
         # jet id #
         selection.add('jetid', ak.all(FatJets.jetId > 0, axis=1)) # Will this not always be true?
-        print('Selection updated:', selection.names)
-        print(getMETFilter(self.iov, events))
-        print(len(getMETFilter(self.iov, events)), '\n')
+        # print('Selection updated:', selection.names)
+        # print(getMETFilter(self.iov, events))
+        # print(len(getMETFilter(self.iov, events)), '\n')
         
         
         # jet kinematics # 
         jetkincut = (FatJets.pt > self.ak8PtMin) & (np.abs(getRapidity(FatJets.p4)) < 2.4)
-        print('jetkincut = ', ak.all(jetkincut, axis=1))
+        # print('jetkincut = ', ak.all(jetkincut, axis=1))
         selection.add('jetkincut', ak.all(jetkincut, axis=1))
-        print('Selection updated:', selection.names)
+        # print('Selection updated:', selection.names)
 #         FatJets = FatJets[jetkincut]
-        print(len(ak.all(jetkincut, axis=1)), '\n')
+        # print(len(ak.all(jetkincut, axis=1)), '\n')
         del jetkincut
         
         
         # at least 2 ak8 jets #
         #twoFatJets = (ak.num(FatJets) >= 2)
         selection.add('twoFatJets', (ak.num(FatJets) >= 2))
-        print('Selection updated:', selection.names)
-        print((ak.num(FatJets) >= 2), '\n')
+        # print('Selection updated:', selection.names)
+        # print((ak.num(FatJets) >= 2), '\n')
         
         # save cutflow
         if isNominal:
@@ -533,20 +507,20 @@ class TTbarResProcessor(processor.ProcessorABC):
                 output['cutflow'][cut] += len(FatJets[selection.all(*cuts)])
             del cuts
         
-        # ht cut #
-        # selection.add('htCut', ak.sum(Jets.pt, axis=1) > self.htCut)
         
-        print('Final pre-selection is to apply HT cut...')
+        # print('Final pre-selection is to apply HT cut...')
         eventCut = selection.all(*selection.names)
         FatJets = FatJets[eventCut]
         SubJets = SubJets[eventCut]
         Jets    = Jets[eventCut]
         evtweights = evtweights[eventCut]
         events = events[eventCut]
+        if not isData: GenJets = GenJets[eventCut]
 
         # len(events)
 
-        passHT = ak.sum(Jets.pt, axis=1) > self.htCut
+        #passHT = ak.sum(Jets.pt, axis=1) > self.htCut
+        passHT = ak.sum(Jets[(Jets.pt>30) & (np.abs(Jets.eta)<3.0)].pt, axis=1) > self.htCut
         FatJets = FatJets[passHT]
         SubJets = SubJets[passHT]
         Jets    = Jets[passHT]
@@ -556,8 +530,8 @@ class TTbarResProcessor(processor.ProcessorABC):
             output['cutflow']['passHT cut'] += len(FatJets)
         # len(events)
         
-        if not isData: GenJets = GenJets[eventCut]
-        print('All Kinematic Selections Applied\n')
+        if not isData: GenJets = GenJets[passHT]
+        # print('All Kinematic Selections Applied\n')
         del eventCut, passHT
 
         # ---- ttbar candidates ---- #
@@ -613,10 +587,13 @@ class TTbarResProcessor(processor.ProcessorABC):
         SubJet10 = SubJets[ttbarcands.slot1.subJetIdx1]
         SubJet11 = SubJets[ttbarcands.slot1.subJetIdx2]
         
-        
+        # tau32 cuts for plotting
+        tau32_s0 = np.where(ttbarcands.slot0.tau2>0,ttbarcands.slot0.tau3/ttbarcands.slot0.tau2, 0 )
+        tau32_s1 = np.where(ttbarcands.slot1.tau2>0,ttbarcands.slot1.tau3/ttbarcands.slot1.tau2, 0 )
         
         # ----------- DeepAK8 Tagger (Discriminator Cut) ----------- #
         if self.useDeepAK8:
+            
             ttag_s0_disc = ttbarcands.slot0.deepTagMD_TvsQCD > self.deepAK8Cut
             ttag_s1_disc = ttbarcands.slot1.deepTagMD_TvsQCD > self.deepAK8Cut
             antitag_disc = (ttbarcands.slot0.deepTagMD_TvsQCD < self.deepAK8Cut) & (ttbarcands.slot0.deepTagMD_TvsQCD > 0.2)
@@ -631,27 +608,26 @@ class TTbarResProcessor(processor.ProcessorABC):
             
         # ----------- CMS Top Tagger Version 2 (SD and Tau32 Cuts) ----------- #
         else:
-            tau32_s0 = np.where(ttbarcands.slot0.tau2>0,ttbarcands.slot0.tau3/ttbarcands.slot0.tau2, 0 )
-            tau32_s1 = np.where(ttbarcands.slot1.tau2>0,ttbarcands.slot1.tau3/ttbarcands.slot1.tau2, 0 )
 
             taucut_s0 = tau32_s0 < self.tau32Cut
             taucut_s1 = tau32_s1 < self.tau32Cut
-
+            
             mcut_s0 = (self.minMSD < ttbarcands.slot0.msoftdrop) & (ttbarcands.slot0.msoftdrop < self.maxMSD) 
             mcut_s1 = (self.minMSD < ttbarcands.slot1.msoftdrop) & (ttbarcands.slot1.msoftdrop < self.maxMSD) 
 
             ttag_s0 = (taucut_s0) & (mcut_s0)
             ttag_s1 = (taucut_s1) & (mcut_s1)
-            antitag = (~taucut_s0) & (mcut_s0) # The Probe jet will always be ttbarcands.slot1 (at)
-        
-        
-        # tau32 cuts for plotting
-        tau32_s0 = np.where(ttbarcands.slot0.tau2>0,ttbarcands.slot0.tau3/ttbarcands.slot0.tau2, 0 )
-        tau32_s1 = np.where(ttbarcands.slot1.tau2>0,ttbarcands.slot1.tau3/ttbarcands.slot1.tau2, 0 )
 
-        taucut_s0 = tau32_s0 < self.tau32Cut
-        taucut_s1 = tau32_s1 < self.tau32Cut
-        
+            antitag = (~taucut_s0) & (mcut_s0) # The Probe jet will always be ttbarcands.slot1 (at)
+            
+            if self.Sideband:
+                mcut_s0 = (40. < ttbarcands.slot0.msoftdrop) & (ttbarcands.slot0.msoftdrop < 105.) # Side Band Window for Closure Test
+                mcut_s1 = (40. < ttbarcands.slot1.msoftdrop) & (ttbarcands.slot1.msoftdrop < 105.) 
+                
+                ttag_s0 = (taucut_s0) & (mcut_s0) # Side Band Window for Closure Test
+                ttag_s1 = (taucut_s1) & (mcut_s1)
+
+                antitag = (~taucut_s0) & (mcut_s0) # The Probe jet will always be ttbarcands.slot1 (at)
         
         
         # ---- Define "Top Tag" Regions ---- #
@@ -708,7 +684,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         # use subset of analysis category masks from ttbaranalysis.py
         labels_and_categories = {label:categories[label] for label in self.anacats}
-    
+        # print(labels_and_categories)
         
         jetmass = ttbarcands.slot1.p4.mass
         jetp = ttbarcands.slot1.p4.p
@@ -728,15 +704,18 @@ class TTbarResProcessor(processor.ProcessorABC):
         if (self.bkgEst):
 
             # for mistag rate weights
-            mistag_rate_df = pd.read_csv(f'data/corrections/backgroundEstimate/mistag_rate_{self.iov}_inc.csv')
+            mistag_rate_df = pd.read_csv('data/corrections/backgroundEstimate/mistag_rate_'+self.iov+'_inc.csv')
             pbins = mistag_rate_df['jetp bins'].values
-            mistag_weights = np.ones(len(FatJets), dtype=float)
+            mistag_weights = np.ones(len(FatJets), dtype=float) # initialization
+
+            if 'QCD' in dataset:
+                mistag_rate_df = pd.read_csv('data/corrections/backgroundEstimate/QCD_mistag_rate_'+self.iov+'_inc.csv')
             
             
             # for mass modification
             if self.MassMod:
                 
-            	qcd_jetmass_dict = json.load(open(f'data/corrections/backgroundEstimate/QCD_jetmass_{self.iov}.json'))
+            	qcd_jetmass_dict = json.load(open('data/corrections/backgroundEstimate/QCD_jetmass_'+self.iov+'.json'))
             	qcd_jetmass_bins = qcd_jetmass_dict['bins']
     
             for ilabel,icat in labels_and_categories.items():
@@ -779,11 +758,11 @@ class TTbarResProcessor(processor.ProcessorABC):
     
         del jetmass, jetp, jetmsd
         
-        jetpt = ttbarcands.slot1.p4.pt
-        jeteta = ttbarcands.slot1.p4.eta
-        jetphi = ttbarcands.slot1.p4.phi
-        jetmass = ttbarcands.slot1.p4.mass
-        jetp = ttbarcands.slot1.p4.p
+        jetpt = ttbarcands.slot0.p4.pt
+        jeteta = ttbarcands.slot0.p4.eta
+        jetphi = ttbarcands.slot0.p4.phi
+        jetmass = ttbarcands.slot0.p4.mass
+        jetp = ttbarcands.slot0.p4.p
         
         # plot same jetmass as pre-tagged, anti-tagged jet
         jetmsd = ttbarcands.slot0.msoftdrop
@@ -828,7 +807,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                     weightDown=pdfDown,
                            )    
             
-            if 'q2' in self.systematics:
+            if 'q2' in self.systematics and 'TTbar' in dataset:
                 
                 q2Nom, q2Up, q2Down = GetQ2weights(events)
                 
@@ -864,14 +843,35 @@ class TTbarResProcessor(processor.ProcessorABC):
                 
                 
                 btag_wgts_nom[ak.flatten(btag0)]  = btag_wgts_nom_bcats['0b'][ak.flatten(btag0)]
-                btag_wgts_up[ak.flatten(btag0)]   = btag_wgts_nom_bcats['0b'][ak.flatten(btag0)]
-                btag_wgts_down[ak.flatten(btag0)] = btag_wgts_nom_bcats['0b'][ak.flatten(btag0)]
+                btag_wgts_up[ak.flatten(btag0)]   = btag_wgts_up_bcats['0b'][ak.flatten(btag0)]
+                btag_wgts_down[ak.flatten(btag0)] = btag_wgts_down_bcats['0b'][ak.flatten(btag0)]
+                # print('\t\t ---- AFTER btag0 CUT ----')
+                # print('up: ', btag_wgts_up)
+                # print('nom: ', btag_wgts_nom)
+                # print('down: ', btag_wgts_down)
+                # print('\t\t ---- BEFORE btag1 CUT ----')
                 btag_wgts_nom[ak.flatten(btag1)]  = btag_wgts_nom_bcats['1b'][ak.flatten(btag1)]
-                btag_wgts_up[ak.flatten(btag1)]   = btag_wgts_nom_bcats['1b'][ak.flatten(btag1)]
-                btag_wgts_down[ak.flatten(btag1)] = btag_wgts_nom_bcats['1b'][ak.flatten(btag1)]
+                btag_wgts_up[ak.flatten(btag1)]   = btag_wgts_up_bcats['1b'][ak.flatten(btag1)]
+                btag_wgts_down[ak.flatten(btag1)] = btag_wgts_down_bcats['1b'][ak.flatten(btag1)]
+                # print('\t\t ---- AFTER btag1 CUT ----')
+                # print('up: ', btag_wgts_up)
+                # print('nom: ', btag_wgts_nom)
+                # print('down: ', btag_wgts_down)
+                # print('\t\t ---- BEFORE btag2 CUT ----')
                 btag_wgts_nom[ak.flatten(btag2)]  = btag_wgts_nom_bcats['2b'][ak.flatten(btag2)]
-                btag_wgts_up[ak.flatten(btag2)]   = btag_wgts_nom_bcats['2b'][ak.flatten(btag2)]
-                btag_wgts_down[ak.flatten(btag2)] = btag_wgts_nom_bcats['2b'][ak.flatten(btag2)]
+                btag_wgts_up[ak.flatten(btag2)]   = btag_wgts_up_bcats['2b'][ak.flatten(btag2)]
+                btag_wgts_down[ak.flatten(btag2)] = btag_wgts_down_bcats['2b'][ak.flatten(btag2)]
+                # print('\t\t ---- AFTER btag2 CUT ----')
+                # print('up: ', btag_wgts_up)
+                # print('nom: ', btag_wgts_nom)
+                # print('down: ', btag_wgts_down)
+                # print('\t\t ---- BEFORE INCLUDING WEIGHTS ----')
+                
+                # print('\t\t ---- FIRST LINE ----')
+                # print('up: ', btag_wgts_up_bcats['0b'][ak.flatten(btag0)])
+                # print('nom: ', btag_wgts_nom_bcats['0b'][ak.flatten(btag0)])
+                # print('down: ', btag_wgts_down_bcats['0b'][ak.flatten(btag0)])
+                # print('\t\t ---- LAST LINE ----')
                 
                 weights.add("btag", 
                     weight=btag_wgts_nom, 
@@ -882,11 +882,50 @@ class TTbarResProcessor(processor.ProcessorABC):
                 del btag_wgts_nom, btag_wgts_up, btag_wgts_down
                 del btag_wgts_nom_bcats, btag_wgts_up_bcats, btag_wgts_down_bcats
                 
+            if 'toptagsf' in self.systematics:
                 
+                toptagNom  = np.ones(len(events))
+                toptagUp   = np.ones(len(events))
+                toptagDown = np.ones(len(events))
+                
+                toptagNom, toptagUp, toptagDown = GetTopTagSFweights([ttag1, ttag2])
+                
+                # print('\t\t ---- FIRST LINE ----')
+                # print('up: ', ak.flatten(toptagUp))
+                # print('nom: ', ak.flatten(toptagNom))
+                # print('down: ', ak.flatten(toptagDown))
+                
+                
+                weights.add("toptagsf",
+                            weight=ak.flatten(toptagNom),
+                            weightUp=ak.flatten(toptagUp),
+                            weightDown=ak.flatten(toptagDown),
+                    )
+                # print('\t\t ---- LAST LINE ----')
             
-                            
+            if 'toptagxs' in self.systematics and 'TTbar' in dataset:
                 
+                weights.add("toptagxs",
+                            weight=ak.Array(np.ones(len(events))), # XS already applied to plots after processing
+                            weightUp=ak.Array(np.full(len(events), 1.08)),
+                            weightDown=ak.Array(np.full(len(events), 0.92))
+                    )
+            
+            if 'lumi' in self.systematics:
+                
+                lumiUp, lumiDown = GetLumiweights(self.iov)
 
+                # print('\t\t ---- FIRST LINE ----')
+                # print('up: ', np.full(len(events), lumiUp))
+                # print('nom: ', np.ones(len(events)))
+                # print('down: ', np.full(len(events), lumiDown))
+                weights.add("lumi",
+                            weight=ak.Array(np.ones(len(events))), # Luminosity already applied to plots after processing
+                            weightUp=ak.Array(np.full(len(events), lumiUp)),
+                            weightDown=ak.Array(np.full(len(events), lumiDown)),
+                    )
+                # print('\t\t ---- LAST LINE ----')
+            
 
 
         for i, [ilabel,icat] in enumerate(labels_and_categories.items()):
@@ -906,6 +945,10 @@ class TTbarResProcessor(processor.ProcessorABC):
                                            weight = weights.weight()[icat],
                                         )
                 output['jetp'].fill(anacat = i,
+                                   jetp = ak.flatten(jetp[icat]),
+                                   weight = weights.weight()[icat],
+                                        )
+                output['jetp_m'].fill(anacat = i,
                                    jetp = ak.flatten(jetp[icat]),
                                    weight = weights.weight()[icat],
                                         )
@@ -1005,11 +1048,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
 
-        print(output['cutflow'])
+        # print(output['cutflow'])
         return output
 
     def postprocess(self, accumulator):
         return accumulator
-        
-        
-        
