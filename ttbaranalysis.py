@@ -38,11 +38,12 @@ if __name__ == "__main__":
     
     # choose specific eras, pt bins, mass points
     parser.add_argument('--era', choices=['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'], action='append', default=[], help='--era A --era B --era C for multiple eras, runs all eras if not specificed')
-    parser.add_argument('-p', '--pt', choices=['700to1000', '1000toInf'], action='append', default=[], help='pt bins for TTbar datasets')
+    parser.add_argument('-p', '--pt', choices=['700to1000', '1000toInf', '15to7000', '1000to1400', '1400to1800', '1800to2400', '2400to3200'], action='append', default=[], help='pt bins for TTbar or QCD datasets')
     parser.add_argument('-m', '--mass', action='append', default=[], help='mass points for signal')
 
     # analysis options
     parser.add_argument('--bkgest', action='store_true', help='run with background estimate')
+    parser.add_argument('--sideband', action='store_true', help='Use Sideband Soft Drop Window for Closure Test')
     parser.add_argument('--noSyst', action='store_true', help='run without systematics')
     parser.add_argument('--unblind', action='store_true', help='run with unblinded 2017 and/or 2018 data')
     parser.add_argument('--noMM',    action='store_true', help='Turn off QCD mass modification for bkgest')
@@ -124,8 +125,16 @@ if __name__ == "__main__":
         'pileup',
         'pdf',
         'q2',
-        'btag',
+        # 'btag',
+        'toptagsf',
+        'toptagxs',
+        'lumi'
     ]
+
+    # systematics = [
+    #     'nominal',
+    #     'btag',
+    # ]
     
     if ('2016' in IOV) or ('2017' in IOV): systematics.append('prefiring')
     if '2018' in IOV: systematics.append('hem')
@@ -229,16 +238,17 @@ if __name__ == "__main__":
                 fileset = {sample: files}            
 
                 # coffea output file name
-                subString = subsection.replace('700to', '_700to').replace('1000to','_1000to')
+                subString = subsection.replace('700to', '_700to').replace('1000to','_1000to').replace('15to','_15to').replace('1400to','_1400to').replace('1800to','_1800to').replace('2400to','_2400to')
 #                 if args.OW: subString += '_OW'
                 if args.noSyst: subString += '_noSyst'
+                if args.sideband: subString += '_sbTagDef'
                 if args.bkgest: subString += '_bkgest'
                 if args.test: subString += '_test'
                 if Blinding and (('2016' not in IOV) and ('JetHT' in args.dataset)):
                     subString += '_blinded'
-                if useDeepAK8: subString += '_DeepAK8' # Temporary labeling for making outputs with deepAK8 tagger
+                if useDeepAK8: subString += '_DeepAK8' # Labeling for making outputs with deepAK8 tagger
                 if not MassModOn: subString += '_noMassMod'
-                # subString += '_sumw' # Temp label for testing earlier sumw calculation
+                subString += '_oldHTcut_oldBTag' # Temp label for testing with old HT cut of 950
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
@@ -259,6 +269,7 @@ if __name__ == "__main__":
                         processor_instance=TTbarResProcessor(
                                                              iov=IOV,
                                                              bkgEst=args.bkgest,
+                					     Sideband=args.sideband,
                                                              noSyst=args.noSyst,
                                                              blinding=Blinding,
                                                              MassMod=MassModOn,
@@ -270,7 +281,7 @@ if __name__ == "__main__":
                                                             ),
                         executor=processor.futures_executor,
                         executor_args={
-                                "skipbadfiles": False,
+                                "skipbadfiles": True,
                                 "savemetrics": True,
                                 "schema": NanoAODSchema,
                                 "workers":4
@@ -309,7 +320,7 @@ if __name__ == "__main__":
                             executor=processor.DaskExecutor(client=client, retries=12,),
                             schema=NanoAODSchema,
                             savemetrics=True,
-                            skipbadfiles=False,
+                            skipbadfiles=True,
                             chunksize=chunksize_dask,
                             maxchunks=maxchunks,
                         )
@@ -334,6 +345,7 @@ if __name__ == "__main__":
                                                       processor_instance=TTbarResProcessor(
                                                           iov=IOV,
                                                           bkgEst=args.bkgest,
+                                                          Sideband=args.sideband,
                                                           noSyst=args.noSyst,
                                                           blinding=Blinding,
                                                           MassMod=MassModOn,
@@ -357,7 +369,3 @@ if __name__ == "__main__":
     elapsed = time.time() - tic
     print(f"\nFinished in {elapsed:.1f}s")
     print(f"Events/s: {metrics['entries'] / elapsed:.0f}")
-    
-
-
-
