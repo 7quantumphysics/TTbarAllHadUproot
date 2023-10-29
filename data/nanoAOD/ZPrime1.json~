@@ -1,9 +1,7 @@
 {
     "datasets": [
         "/ZPrimeToTT_M{XXXX}_W{XXX}_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v2/NANOAODSIM",
-        "/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODAPVv9-106X_mcRun2_asymptotic_preVFP_v11-v1/NANOAODSIM",
         "/ZPrimeToTT_M{XXXX}_W{XXX}_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v2/NANOAODSIM",
-        "/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL16NanoAODv9-106X_mcRun2_asymptotic_v17-v1/NANOAODSIM",
         "/ZPrimeToTT_M{XXXX}_W{XXX}_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL17NanoAODv9-106X_mc2017_realistic_v9-v2/NANOAODSIM",
         "/ZPrimeToTT_M{XXXX}_W{XXX}_TuneCP2_13TeV-madgraph-pythia8/RunIISummer20UL18NanoAODv9-106X_upgrade2018_realistic_v16_L1v1-v2/NANOAODSIM"
     ],
@@ -31,59 +29,6 @@
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1000_W100_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/42DFC0F3-4423-DB43-BE2A-18E8F6D2356D.root",
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1000_W100_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/80000/13E813D1-C37F-0B45-9A6F-E0C208CABE12.root"
         ],
-        "1200": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/5748FB1A-FE05-E741-9B3D-EA71BE2922D6.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/7FD179F2-4B19-8347-A18E-588ABFC4EE5F.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/00DBBFE3-9914-5841-A75D-B96440597492.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/30691792-8010-BB48-8C3C-1AF8F751E3B5.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/445CCC13-9C67-054B-B5C6-91686C79D641.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/829ED3D6-B555-2949-BF59-C44955F87177.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/8D71B191-9B2D-334F-A06F-80C0E10D5EFD.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/E7AE144D-F406-7646-A674-ABE2FA0FDA94.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/E9F4B71C-B556-D542-A2A3-A4EAE8542B86.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/4AC40485-BE84-9C44-817D-4B48724E26CE.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/6844725E-07A7-4A4E-A105-3166E77C5072.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/B2A98B26-EB15-114C-9AA4-1AC3D2AFE1F2.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/FEE85DB4-546D-DF45-A4B8-5F53537C9520.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/025C1EE0-46C4-DA4C-B882-88747BC7A3DA.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/1434161C-59DE-7D4E-967F-321F1DBAA588.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/4CCF8D93-BE67-3B4B-8B6D-2BCBA17C9442.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/5512B208-E30A-AB42-B718-DD5F50471DD6.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/63B84672-0EBE-2743-B095-C340FC43EA24.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/8F0DA576-A941-064E-B4B9-5BF39398853C.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/CCB81CC8-73C0-A044-AAF3-10DF63A2696D.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/FC411F8D-5C57-8046-8759-31CC146B11CF.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/80000/591C0A41-9BB5-7140-9681-A983A082A14E.root"
-        ],
-        "1400": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/1F6EF717-790E-3342-A0DA-070540D59B21.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/616631FC-DEB1-1743-9460-96583C8B8CF1.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/7EE82958-A97B-A745-B153-41CD8893B45F.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/C9D52AB9-52B9-5B4D-9182-160C76121AF0.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/B6E2E138-6FBB-884A-9CE8-D6371EC1C28A.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/C25BD513-308C-3C48-9D32-373BD95BBBA8.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/E5E46029-7010-204F-B469-471227FCF1BB.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/F0191137-5356-9945-AAA6-D54211F534DA.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/F8C72D69-A274-144A-9DC0-E77EF9A99C32.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/687BF23B-14B2-8647-BC63-B94115CA0325.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/EDCF2520-ADFB-4E4E-8370-C7018CD83FAB.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/80000/894E588E-6D61-964D-BC13-4D866FBB8BDD.root"
-        ],
-        "1600": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/1D5CEF87-3F16-454D-A550-015D05BE6FA3.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/92522942-17A8-5748-AE5A-1CFE2B86BD6C.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/994FC736-7666-B548-BC9B-3D512C718EEA.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/2142853A-8623-4046-AE95-2954279050ED.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/CCF276AC-E539-5846-BDEA-869F4CAEC6EE.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/2974D2DF-A9E9-DA4D-B950-ABD86F84732A.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/8854E46B-2822-9949-BBB1-62D5F3F1683E.root"
-        ],
-        "1800": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/38CC92DB-AA88-4F45-978A-276190300F5C.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/923C9416-BEB8-F444-BCA0-66AB55FBC48E.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2550000/A2989B07-8856-5841-8464-99A057ED5555.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/D4B3D08B-8E54-E04F-A0C2-FE46E98F1C6D.root"
-        ],
         "2000": [
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/54156075-21B6-BD4C-AFAB-1CC6F2C3FEC7.root",
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/BA11912E-B4F5-7D4F-989B-BACE2D025F4C.root",
@@ -104,60 +49,13 @@
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/80000/605211FC-DD42-774D-8D0C-47A15DEEAE97.root",
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2550000/2FF12DDC-C41F-254A-975D-D9A4A5A7CDE1.root"
         ],
-        "2500": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2500_W250_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/37F0030B-EA85-B747-AACA-18B3F05136DF.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M2500_W250_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/4DE07D45-662A-F645-8E1B-2B61225B486B.root"
-        ],
         "3000": [
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3000_W300_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/230000/F830CC9D-0F3B-D14C-8F03-13B837893BC3.root"
-        ],
-        "3500": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/B280D6FF-9488-8541-B317-631BD95B9FEA.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/E176A772-8FC4-C447-B06C-EDB79F7114F7.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/ED85A8D1-3E1D-4D47-8DDE-5F3F52E79176.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/12E78CF5-2D11-FA45-AB8A-83F6355F0751.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/35039298-693C-C648-8CDD-71C93626061F.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/1295E124-7CA6-704D-B4B0-2AF87F082C4A.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/FFC64218-BE2A-884B-BDA3-BA2CECA83307.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/C0140A85-737A-1D47-A23D-A6EB8666B3D3.root"
         ],
         "4000": [
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/C98A20A2-7C0A-8A42-8659-C991E5CFDFCE.root",
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/70D76946-FA93-D542-A779-E0B0803E867A.root",
             "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/653E84E5-6CA5-2343-BFAA-9B391D9188CE.root"
-        ],
-        "4500": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/9507A49C-23F9-A24D-8EFB-2B018C39EBFB.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/DC24F42D-E247-6D47-855D-5E1A84D98233.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2520000/E5B36BCA-87A4-FA40-872C-1EC7226F81A6.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/6C2D36DB-0A1C-9341-8D03-4863848BF6C9.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/9B697361-4987-0A43-A6C5-6D5D7C4C99E8.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/9E040D3F-65A4-304C-90ED-58447BF3E73E.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/C6F00253-2941-5642-9330-AF947A46FD83.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/F728DED4-A480-B34A-9EFB-169B41845413.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2530000/FFC770DE-A0B1-2E4A-BC6F-F365A4BB52B8.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2540000/5FFB79B9-0809-F447-8246-EA0388F70282.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/2550000/22AFB4BD-92A8-9142-84AF-8D153116AF99.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/18BCCE48-2011-0E4D-A77C-A54C0AAF3BE3.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/5BC98DC4-6A4C-C24E-9A03-BA87B03631EB.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/260000/E99F0917-4FD0-264A-A654-6CD0C08BDDA7.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/44FDF89D-FA9E-E943-B09C-BF1E7FF9B624.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/6A0A683D-0E73-0D4E-AC24-6951EADB27F3.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/9A0BF739-CD95-A340-81B7-2A9930A43842.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/EE24119E-62F6-C24E-ACFC-8D0497964D49.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v2/270000/F8DF6627-993C-FD4A-A275-73EAD0BBA76D.root"
-        ],
-        "5000": [
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/0370F7B4-F321-8448-B48E-0925D0364507.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/11CFEC1B-FCC7-B745-9CE9-B9C6B79A351F.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/1F774159-5D0F-3542-B40B-45EC8A15E19A.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/1FA1A55B-2F08-B948-88D4-CE669BCEFB2B.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/4479C59C-940C-A542-B3D3-657A150053FF.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/95F7A340-AF6D-1E4A-80A5-17F5B5DB1697.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/984B424D-FECF-6E42-BE69-4378BB7AFFC1.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/B1C12E5A-6B3E-FA43-A76E-D6B8867AA470.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/E9E2CF44-597B-6241-853F-ECB35AFE3171.root",
-            "/store/mc/RunIISummer20UL16NanoAODAPVv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_preVFP_v11-v1/50000/EB2A3696-CFF7-1B44-B063-E2AE3D36C69F.root"
         ]
     },
     
@@ -173,70 +71,12 @@
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1000_W100_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/6E508763-A12F-8846-A295-F39EE7DDAA52.root",
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1000_W100_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/80000/E964C281-43FB-D349-A436-9A3FDA0BAA28.root"
         ],
-        "1200": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/F1E5754C-5AFA-5B48-8D57-74615C351D0B.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1200_W120_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/4E5120C4-6A79-5840-861D-E376AFF3B4C9.root"
-        ],
-        "1400": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/100000/3C2EE8E9-D54C-D041-9A85-96E06B822EEB.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/100000/C499A0A0-E2B1-4A41-BD2F-26DFFE580DB1.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/110000/A0C15D46-53F8-734C-AEAB-8C5F7AADA244.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/12FBD587-9F2E-1345-8FDE-47F941AEEC69.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/4F50E07D-5EDB-3245-81DA-27EA30CCD069.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/5C7463CD-BFB1-3942-9DE4-5E76BBBACFDE.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/72299493-E36D-2447-97D5-CAF7363F0E14.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/ACAC2CC1-A719-C846-969E-9A44064F5324.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/C08668E4-BEA1-C148-A92F-6BDE0128726B.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/C37BF269-BD07-F541-B87E-5EAC64AF8D72.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/C81AD6D6-F715-2B45-95CF-B73F72392659.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/C9831315-889E-5B4B-A089-80D81D35830E.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/CC42A343-D2C8-4647-9D50-65407529C6A6.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/CD4FA22E-7449-C64D-B647-FFD1C9B70A80.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/D59F63BB-D1CC-B742-8C31-058738BA8F23.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/DB40C28A-F6D1-FE47-95B6-8E2494DE452C.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1400_W140_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/FF9F58F8-C637-4941-9CAC-97B86C779DAE.root"
-        ],
-        "1600": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/3891D0F9-92ED-4643-B0B8-71F666D35C2F.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/1B644D8B-D359-4848-A457-A25A3648AD6F.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/1F69FFBE-C588-5D46-B6D9-2D9DCF229876.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/49706676-FF5A-274D-94A0-5AB1E47237A0.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/5445C5D7-8CA8-1A47-B95F-CC1C203B1CB4.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/545CFDB9-3F90-4242-BD12-C22F35D853D9.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/5C9190D0-98DB-8748-8D73-0368BD8C226D.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/726E758F-6A77-7C4A-B352-C8A4E9E212F7.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/803B6186-91B4-C74F-8302-EE6A96C4614A.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/884A74B0-1991-E046-BAF2-EC083629C3E2.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/BEC8DE19-8165-D049-9DE5-7EBE8C30BD21.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/1110EF17-93AA-964D-9768-219B98A34EA6.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/2285B708-9179-214D-A1D9-351A99CD1701.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/64EE53DE-20A6-514B-A7C5-1F0563D0C8FB.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/9ECD89FE-C2D1-9F49-A699-25B63638A749.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/A21775F7-B783-564B-8116-44FFCAC3A720.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/DE5CBC51-3200-8642-A92E-5B40D7E93D01.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1600_W160_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/80000/47EEED1E-462F-CE4B-BB8A-DD7B1D84643E.root"
-        ],
-        "1800": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/94A7887A-EF19-6845-B2D4-E37A83D33A45.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/0EBA501F-6111-E24B-B83A-BAB2E62D2BFB.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M1800_W180_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/293B6743-C0EA-C64C-84DA-9EA33FB77DCC.root"
-        ],
         "2000": [
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/7A83E108-8CB7-5647-8848-C2C48F430E09.root",
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M2000_W200_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2530000/288B512F-09A1-5D48-8D1B-6216C5904FB5.root"
         ],
-        "2500": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M2500_W250_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2530000/DE249C15-3AB8-9740-928E-0765ACECAE78.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M2500_W250_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/20CF33B2-8EA8-DC4A-8A36-2DAF06B7ECAD.root"
-        ],
         "3000": [
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M3000_W300_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/BF8B3518-C5C1-6745-B07E-B4405681A792.root"
-        ],
-        "3500": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/A0DD46DB-5150-2444-9C45-E040BCAB451A.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2530000/312F6632-609B-A84A-BCC2-D4EBD4668B18.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/240EBBB1-F2FB-9140-B790-46CA5CF9F8AB.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M3500_W350_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/270000/5F363A79-3E76-5348-96C8-FC5E7DAB911E.root"
         ],
         "4000": [
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2520000/5433BA71-5107-7741-B17B-60BA160FC4F7.root",
@@ -254,26 +94,6 @@
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2530000/729669DF-B681-824C-AD3E-F490E18A94F3.root",
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/2530000/9EEAE7F9-E2D8-754C-8FE4-6772BDDF7DB9.root",
             "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4000_W400_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/30000/529FB742-787E-ED44-8136-EBDC17FE19E5.root"
-        ],
-        "4500": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/100000/524DD4CF-0937-F94F-AFAE-0166CE3A6E2A.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/110000/994ABF9C-672E-5741-A1A7-41EB17593AE8.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/0F4915A6-8768-6542-969E-9DB9D9139BE1.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/3121A5EB-1021-C643-8A46-4488EF0A58E0.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/3A7FE08A-3CBB-844D-8C2F-B13802498273.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/5092956F-C93A-D243-8E36-91A1FDD77472.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/53F12874-909C-1349-9768-CE9B24AADEDC.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/54AA1065-3CDD-9947-B8B2-59756992275D.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/5DEA433C-57A7-7E46-9DC0-BA0CD2E310E7.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/629F9F0B-5025-744B-8F2A-ECE1E28E65C7.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/953AC009-94FD-8F45-949E-A7191FD3D618.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/B0D331F2-6447-B444-91D6-06FBCADCFC6C.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/C051B992-7F6A-4D44-B4A3-9E58C7EBDF2F.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/E0C3C999-4E0A-BC4D-AAD9-C8360BDA9AE4.root",
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M4500_W450_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v2/260000/FE670F0C-921F-5942-95AD-A08FBFA99256.root"
-        ],
-        "5000": [
-            "/store/mc/RunIISummer20UL16NanoAODv9/ZPrimeToTT_M5000_W500_TuneCP2_13TeV-madgraph-pythia8/NANOAODSIM/106X_mcRun2_asymptotic_v17-v1/40000/B667892C-6343-FD4F-B7D7-13ECD0ECD1AA.root"
         ]
     },
     
