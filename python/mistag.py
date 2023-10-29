@@ -12,11 +12,12 @@ import os
 
 # ## analysis categories
 
-IOVs = ['2016APV', '2016', '2017', '2018'] #['2016APV', '2016']
-label_dict = util.load(f'outputs/QCD_{IOVs[0]}_noSyst.coffea')['analysisCategories']
+IOVs = ['2016APV'] #['2016APV', '2016']
 
-for i,l in label_dict.items():
-    print(i,l)
+# label_dict = util.load(f'outputs/QCD_{IOVs[0]}_noSyst.coffea')['analysisCategories']
+
+# for i,l in label_dict.items():
+#     print(i,l)
 
 
 
@@ -30,73 +31,73 @@ for i,l in label_dict.items():
 # label_dict = {i: label for i, label in enumerate(anacats)}
 
 
-label_to_int_dict = {label: i for i, label in label_dict.items()}
+# label_to_int_dict = {label: i for i, label in label_dict.items()}
 
 
 # ## directories for saving files
 
-save_csv_filename = 'mistag_rate.csv'
+# save_csv_filename = 'mistag_rate.csv'
 
 # ## load coffea files
 
-coffea_dir = 'outputs/'
-coffeaFiles = {
-    "JetHT":{
-        "2016APV": {
-            "B": coffea_dir+'JetHT_2016APVB.coffea',
-            "C": coffea_dir+'JetHT_2016APVC.coffea',
-            "D": coffea_dir+'JetHT_2016APVD.coffea',
-            "E": coffea_dir+'JetHT_2016APVE.coffea',
-        },
-        "2016": {
-            "F": coffea_dir+'JetHT_2016F.coffea',
-            "G": coffea_dir+'JetHT_2016G.coffea',
-            "H": coffea_dir+'JetHT_2016H.coffea',
-        },
-        "2017": '',
-        "2018": ''
-    },
+# coffea_dir = 'outputs/'
+# coffeaFiles = {
+#     "JetHT":{
+#         "2016APV": {
+#             "B": coffea_dir+'JetHT_2016APVB.coffea',
+#             "C": coffea_dir+'JetHT_2016APVC.coffea',
+#             "D": coffea_dir+'JetHT_2016APVD.coffea',
+#             "E": coffea_dir+'JetHT_2016APVE.coffea',
+#         },
+#         "2016": {
+#             "F": coffea_dir+'JetHT_2016F.coffea',
+#             "G": coffea_dir+'JetHT_2016G.coffea',
+#             "H": coffea_dir+'JetHT_2016H.coffea',
+#         },
+#         "2017": '',
+#         "2018": ''
+#     },
     
-    "TTbar": {
-        "2016APV": {
-            "700to1000": coffea_dir+'TTbar_2016APV_700to1000.coffea',
-            "1000toInf": coffea_dir+'TTbar_2016APV_1000toInf.coffea',
-        },
-        "2016": {
-            "700to1000": coffea_dir+'TTbar_2016_700to1000.coffea',
-            "1000toInf": coffea_dir+'TTbar_2016_1000toInf.coffea',
-        },
-        "2017": {
-            "700to1000": '',
-            "1000toInf": '',
-        },
-        "2018": {
-            "700to1000": '',
-            "1000toInf": '',
-        }
-    }
-}
+#     "TTbar": {
+#         "2016APV": {
+#             "700to1000": coffea_dir+'TTbar_2016APV_700to1000.coffea',
+#             "1000toInf": coffea_dir+'TTbar_2016APV_1000toInf.coffea',
+#         },
+#         "2016": {
+#             "700to1000": coffea_dir+'TTbar_2016_700to1000.coffea',
+#             "1000toInf": coffea_dir+'TTbar_2016_1000toInf.coffea',
+#         },
+#         "2017": {
+#             "700to1000": '',
+#             "1000toInf": '',
+#         },
+#         "2018": {
+#             "700to1000": '',
+#             "1000toInf": '',
+#         }
+#     }
+# }
 
 
-# ## manual jet $p$ bins
-pbins = np.array([ 400.,  500.,  600.,  800., 1000., 1500., 2000., 3000., 7000.])
+# # ## manual jet $p$ bins
+# pbins = np.array([ 400.,  500.,  600.,  800., 1000., 1500., 2000., 3000., 7000.])
 
 
-# scale factors
-# https://twiki.cern.ch/twiki/bin/viewauth/CMS/PdmVAnalysisSummaryTable
+# # scale factors
+# # https://twiki.cern.ch/twiki/bin/viewauth/CMS/PdmVAnalysisSummaryTable
 
-luminosity = {
-    "2016APV": 19800.,
-    "2016": 16120., #35920 - 19800
-    "2017": 41530.,
-    "2018": 59740.
-}
+# luminosity = {
+#     "2016APV": 19800.,
+#     "2016": 16120., #35920 - 19800
+#     "2017": 41530.,
+#     "2018": 59740.
+# }
 
-ttbar_xs = {}
-ttbar_xs["700to1000"] = 831.76 * (0.09210)
-ttbar_xs["1000toInf"] = 831.76 * (0.02474)
-toptag_sf = 0.9
-toptag_kf = 0.7
+# ttbar_xs = {}
+# ttbar_xs["700to1000"] = 831.76 * (0.09210)
+# ttbar_xs["1000toInf"] = 831.76 * (0.02474)
+# toptag_sf = 0.9
+# toptag_kf = 0.7
 
 
 # ## calculate mistag rate
@@ -108,8 +109,8 @@ toptag_kf = 0.7
 for IOV in IOVs:
     
     jsonfile = f'data/corrections/backgroundEstimate/QCD_jetmass_{IOV}.json'
-
-    qcdfile = util.load(f'outputs/QCD_{IOV}_noSyst.coffea')
+    
+    qcdfile = util.load(f'outputs/QCD_{IOV}_15to7000_oldHTcut_oldBTag.coffea')
     qcd_jetmass_dict = {'bins': [b for b in qcdfile['jetmass'].axes['jetmass'].edges[:-1]]}
 
     for cat in qcdfile['jetmass'].axes['anacat'].edges[:-1]:
