@@ -70,7 +70,7 @@ def update(events, collections):
 """Package to perform the data-driven mistag-rate-based ttbar hadronic analysis. """
 class TTbarResProcessor(processor.ProcessorABC):
     def __init__(self,
-                 htCut=1400.,
+                 htCut=950., #1400.,
                  ak8PtMin=400.,
                  minMSD=105.,
                  maxMSD=210.,
@@ -152,7 +152,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         
-        self.bdisc = btagcuts['medium'][self.iov] # old 2016AN --> 0.8484
+        self.bdisc = 0.8484 #btagcuts['medium'][self.iov] # old 2016AN --> 0.8484
         
         
         
@@ -299,7 +299,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             
             return processor.accumulate([
                 self.process_analysis(events, 'nominal', nEvents),
-                self.process_analysis(events, 'hemVeto', nEvents)
+                # self.process_analysis(events, 'hemVeto', nEvents)
             ]) 
         
         
@@ -336,6 +336,8 @@ class TTbarResProcessor(processor.ProcessorABC):
                 ({"Jet": corrected_jets.JES_jes.up, "FatJet": corrected_fatjets.JES_jes.up}, "jesUp"),
                 ({"Jet": corrected_jets.JES_jes.down, "FatJet": corrected_fatjets.JES_jes.down}, "jesDown"),
             ]
+            # print('JES: ', corrections[0][0]['FatJet'])
+            # print('JES avg: ', corrections[0])
         if 'jer' in self.systematics:
             corrections.extend([
                 ({"Jet": corrected_jets.JER.up, "FatJet": corrected_fatjets.JER.up}, "jerUp"),
@@ -349,10 +351,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         for collections, name in corrections:
             outputs.append(self.process_analysis(update(events, collections), name, nEvents))
             
-        output_total = processor.accumulate(outputs)                       
+        # output_total = processor.accumulate(outputs)                       
 
                         
-        return output_total
+        return outputs[0]
         
 
 
@@ -421,14 +423,14 @@ class TTbarResProcessor(processor.ProcessorABC):
         if isData:
             
             triggernames = { 
-            
+
             "2016APV": ["PFHT900"],
             "2016" : ["PFHT900"], #["PFHT900", "AK8PFJet360_TrimMass30", "AK8PFJet450"],
             "2017" : ["PFHT1050"],
             "2018" : ["PFHT1050"],
-        
+
             }
-                        
+
             selection.add('trigger', events.HLT[triggernames[self.iov][0]])
             trigPass = events.HLT[triggernames[self.iov][0]]
             events = events[trigPass]
@@ -463,11 +465,11 @@ class TTbarResProcessor(processor.ProcessorABC):
                 evtweights = events.genWeight
             else: 
                 evtweights = events.LHEWeight_originalXWGTUP
-                print('LHE event weights used: ', evtweights)
-                print('Generator events replaced: ', events.genWeight)
-                if isNominal:
-                    print('SumW after change to LHE: ', np.sum(evtweights))
-                    print('-----------------------\n')
+                # print('LHE event weights used: ', evtweights)
+                # print('Generator events replaced: ', events.genWeight)
+                # if isNominal:
+                #     print('SumW after change to LHE: ', np.sum(evtweights))
+                #     print('-----------------------\n')
                     
         # if correction == 'nominal':
             # output['cutflow']['all events'] += len(FatJets)
@@ -518,21 +520,24 @@ class TTbarResProcessor(processor.ProcessorABC):
         events = events[htPass]
         if not isData:
             GenJets = GenJets[htPass]
-        output['cutflow']['Passed HT Cut'] += ak.sum(htPass)
+        if isNominal:
+            output['cutflow']['Passed HT Cut'] += ak.sum(htPass)
         del htPass
                 
         # jet id #
 #         selection.add('jetid', ak.any((FatJets.jetId > 0), axis=1))
         idPass = FatJets.jetId > 0
         FatJets = FatJets[idPass]
-        output['cutflow']['Passed Loose Jet ID'] += len(FatJets)
+        if isNominal:
+            output['cutflow']['Passed Loose Jet ID'] += len(FatJets)
         del idPass
                 
         # jet kinematics # 
         jetkincut = (FatJets.pt > self.ak8PtMin) & (np.abs(getRapidity(FatJets.p4)) < 2.4)
 #         selection.add('jetkincut', ak.any(jetkincut, axis=1))
         FatJets = FatJets[jetkincut]
-        output['cutflow']['Passed pT,y Cut'] += len(FatJets)
+        if isNominal:
+            output['cutflow']['Passed pT,y Cut'] += len(FatJets)
         del jetkincut
         
         
@@ -546,7 +551,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         evtweights = evtweights[twoak8Pass]
         if not isData:
             GenJets = GenJets[twoak8Pass]
-        output['cutflow']['>= 2 AK8 Jets'] += len(FatJets)
+            if isNominal:
+                output['cutflow']['>= 2 AK8 Jets'] += len(FatJets)
+        else:
+            output['cutflow']['>= 2 AK8 Jets'] += len(FatJets)
         del twoak8Pass
 
         # event cuts #
@@ -593,7 +601,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         evtweights = evtweights[oneTTbarPass]
         if not isData:
             GenJets = GenJets[oneTTbarPass]
-        output['cutflow']['>= one TTbar'] += len(FatJets)
+            if isNominal:
+                output['cutflow']['>= one TTbar'] += len(FatJets)
+        else:
+            output['cutflow']['>= one TTbar'] += len(FatJets)
         del oneTTbarPass
         
         # ---- Apply Delta Phi Cut for Back to Back Topology ---- #
@@ -606,7 +617,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         evtweights = evtweights[dPhiCutPass]
         if not isData:
             GenJets = GenJets[dPhiCutPass]
-        output['cutflow']['Passed dPhi Cut'] += len(FatJets)
+            if isNominal:
+                output['cutflow']['Passed dPhi Cut'] += len(FatJets)
+        else:
+            output['cutflow']['Passed dPhi Cut'] += len(FatJets)
         del dPhiCutPass
         
         # ttbar candidates have 2 subjets #
@@ -621,7 +635,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         evtweights = evtweights[GoodSubjets]
         if not isData:
             GenJets = GenJets[GoodSubjets]
-        output['cutflow']['Good Subjets'] += len(FatJets)
+            if isNominal:
+                output['cutflow']['Good Subjets'] += len(FatJets)
+        else:
+            output['cutflow']['Good Subjets'] += len(FatJets)
         del GoodSubjets, hasSubjets0, hasSubjets1
         
         # apply ttbar event cuts #
@@ -714,18 +731,15 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         # b tagger #
         
-        bdisc_s0 = np.maximum(SubJet00.btagDeepB , SubJet01.btagDeepB)
-        bdisc_s1 = np.maximum(SubJet10.btagDeepB , SubJet11.btagDeepB)
-        # bdisc_s0 = np.maximum(SubJet00.btagCSVV2 , SubJet01.btagCSVV2)
-        # bdisc_s1 = np.maximum(SubJet10.btagCSVV2 , SubJet11.btagCSVV2)
+        # bdisc_s0 = np.maximum(SubJet00.btagDeepB , SubJet01.btagDeepB)
+        # bdisc_s1 = np.maximum(SubJet10.btagDeepB , SubJet11.btagDeepB)
+        bdisc_s0 = np.maximum(SubJet00.btagCSVV2 , SubJet01.btagCSVV2)
+        bdisc_s1 = np.maximum(SubJet10.btagCSVV2 , SubJet11.btagCSVV2)
         tdisc_s0 = ttbarcands.slot0.deepTagMD_TvsQCD
         tdisc_s1 = ttbarcands.slot1.deepTagMD_TvsQCD
-
         
-        btag_s0 = ( np.maximum(SubJet00.btagDeepB , SubJet01.btagDeepB) > self.bdisc )
-        btag_s1 = ( np.maximum(SubJet10.btagDeepB , SubJet11.btagDeepB) > self.bdisc )
-        # btag_s0 = ( np.maximum(SubJet00.btagCSVV2 , SubJet01.btagCSVV2) > self.bdisc )
-        # btag_s1 = ( np.maximum(SubJet10.btagCSVV2 , SubJet11.btagCSVV2) > self.bdisc )
+        btag_s0 = ( bdisc_s0 > self.bdisc )
+        btag_s1 = ( bdisc_s1 > self.bdisc )
         
         # --- Define "B Tag" Regions ---- #
         btag0 = (~btag_s0) & (~btag_s1) #(0b)
@@ -773,6 +787,9 @@ class TTbarResProcessor(processor.ProcessorABC):
         if (len(evtweights) < 10): return output
         
         weights = Weights(len(evtweights))
+        # print('\t\t ---- FIRST LINE ----\n')
+        # print('Gen weights: ', evtweights)
+        # print('Gen weights avg.= ', np.mean(evtweights))
         weights.add('genWeight', evtweights)
                         
         # if running background estimation
@@ -857,6 +874,8 @@ class TTbarResProcessor(processor.ProcessorABC):
             if 'pileup' in self.systematics:
                 
                 puNom, puUp, puDown = GetPUSF(events, self.iov)
+                # print('P.U. syst.: ', puNom)
+                # print('P.U. syst. avg= ', np.mean(puNom))
                 weights.add("pileup", 
                     weight=puNom, 
                     weightUp=puUp, 
@@ -867,6 +886,8 @@ class TTbarResProcessor(processor.ProcessorABC):
                 if ('2016' in self.iov) or ('2017' in self.iov):
                 
                     prefiringNom, prefiringUp, prefiringDown = GetL1PreFiringWeight(events)
+                    # print('Prefire syst.: ', prefiringNom)
+                    # print('Prefire syst. avg. = ', np.mean(prefiringNom))
                     weights.add("prefiring", 
                         weight=prefiringNom, 
                         weightUp=prefiringUp, 
@@ -876,6 +897,8 @@ class TTbarResProcessor(processor.ProcessorABC):
             if 'pdf' in self.systematics:
                 
                 pdfUp, pdfDown, pdfNom = GetPDFWeights(events)
+                # print('PDF syst.: ', pdfNom)
+                # print('PDF syst. avg = ', np.mean(pdfNom))
                 weights.add("pdf", 
                     weight=pdfNom, 
                     weightUp=pdfUp, 
@@ -885,7 +908,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             if 'q2' in self.systematics:
                 
                 q2Nom, q2Up, q2Down = GetQ2weights(events)
-                
+                # print('Q2 syst.: ', q2Nom)
                 weights.add("q2", 
                     weight=q2Nom, 
                     weightUp=q2Up, 
@@ -947,7 +970,8 @@ class TTbarResProcessor(processor.ProcessorABC):
                 # print('nom: ', btag_wgts_nom_bcats['0b'][ak.flatten(btag0)])
                 # print('down: ', btag_wgts_down_bcats['0b'][ak.flatten(btag0)])
                 # print('\t\t ---- LAST LINE ----')
-                
+                # print('btag syst.: ', btag_wgts_nom)
+                # print('btag syst. avg = ', np.mean(btag_wgts_nom))
                 weights.add("btag", 
                     weight=btag_wgts_nom, 
                     weightUp=btag_wgts_up, 
@@ -971,7 +995,8 @@ class TTbarResProcessor(processor.ProcessorABC):
                 # print('nom: ', ak.flatten(toptagNom))
                 # print('down: ', ak.flatten(toptagDown))
                 
-                
+                # print('Top Tag SF.: ', ak.flatten(toptagNom))
+                # print()
                 weights.add("toptagsf",
                             weight=ak.flatten(toptagNom),
                             weightUp=ak.flatten(toptagUp),
@@ -1008,10 +1033,9 @@ class TTbarResProcessor(processor.ProcessorABC):
         for i, [ilabel,icat] in enumerate(labels_and_categories.items()):
         
             icat = ak.flatten(icat)
-            
-            output['cutflow'][ilabel] += np.sum(icat)
                 
-            if correction == 'nominal':                    
+            if correction == 'nominal':    
+                output['cutflow'][ilabel] += np.sum(icat)
                 output['numerator'].fill(anacat = i,
                                          jetp = ak.flatten(numerator[icat]),
                                          weight = weights.weight()[icat],
@@ -1093,7 +1117,7 @@ class TTbarResProcessor(processor.ProcessorABC):
             
             # save weights
             
-            output['weights'][correction] += np.sum(weights.weight())
+            output['weights'][correction+' total'] += np.sum(weights.weight())
 
 
                 
@@ -1103,7 +1127,7 @@ class TTbarResProcessor(processor.ProcessorABC):
                 for syst in weights.variations:
                     
                     
-                    output['weights'][syst] += np.sum(weights.weight(syst))
+                    output['weights'][syst+' total'] += np.sum(weights.weight(syst))
 
                     output['ttbarmass'].fill(systematic=syst,
                                          anacat = i,
