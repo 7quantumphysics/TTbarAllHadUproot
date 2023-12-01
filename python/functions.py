@@ -19,7 +19,7 @@ t_BR = 0.6741
 ttbar_BR = 0.4544 #PDG 2019
 ttbar_xs1 = 831.76 * (0.09210) #pb For ttbar mass from 700 to 1000
 ttbar_xs2 = 831.76 * (0.02474) #pb For ttbar mass from 1000 to Inf
-toptag_sf = 0.9
+toptag_sf = 1.0
 toptag_kf = 1.0 #0.7
 qcd_xs = 13700000.0 #pb From https://cms-gen-dev.cern.ch/xsdb
 
@@ -446,40 +446,52 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
         "QCD": {
             "unweighted": {
                 "2016APV": {
-                    "800to1000": coffea_dir+'QCD_2016APV_800to1000'+oldHTstr+'.coffea',
-                    "1000to1400": coffea_dir+'QCD_2016APV_1000to1400'+oldHTstr+'.coffea',
-                    "1400to1800": coffea_dir+'QCD_2016APV_1400to1800'+oldHTstr+'.coffea',
-                    "1800to2400": coffea_dir+'QCD_2016APV_1800to2400'+oldHTstr+'.coffea',
-                    "2400to3200": coffea_dir+'QCD_2016APV_2400to3200'+oldHTstr+'.coffea',
-                    "3200toInf": coffea_dir+'QCD_2016APV_3200toInf'+oldHTstr+'.coffea'
+                    "300to470": coffea_dir+'QCD_2016APV_300to470_noSyst'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2016APV_470to600_noSyst'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2016APV_600to800_noSyst'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2016APV_800to1000_noSyst'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2016APV_1000to1400_noSyst'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2016APV_1400to1800_noSyst'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2016APV_1800to2400_noSyst'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2016APV_2400to3200_noSyst'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2016APV_3200toInf_noSyst'+oldHTstr+'.coffea'
                 },
                 "2016": {
-                    "800to1000": coffea_dir+'QCD_2016_800to1000'+oldHTstr+'.coffea',
-                    "1000to1400": coffea_dir+'QCD_2016_1000to1400'+oldHTstr+'.coffea',
-                    "1400to1800": coffea_dir+'QCD_2016_1400to1800'+oldHTstr+'.coffea',
-                    "1800to2400": coffea_dir+'QCD_2016_1800to2400'+oldHTstr+'.coffea',
-                    "2400to3200": coffea_dir+'QCD_2016_2400to3200'+oldHTstr+'.coffea',
-                    "3200toInf": coffea_dir+'QCD_2016_3200toInf'+oldHTstr+'.coffea'
+                    "300to470": coffea_dir+'QCD_2016_300to470_noSyst'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2016_470to600_noSyst'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2016_600to800_noSyst'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2016_800to1000_noSyst'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2016_1000to1400_noSyst'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2016_1400to1800_noSyst'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2016_1800to2400_noSyst'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2016_2400to3200_noSyst'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2016_3200toInf_noSyst'+oldHTstr+'.coffea'
                 },
                 "2017": coffea_dir+'QCD_2017'+deepak8str+'.coffea',
                 "2018": coffea_dir+'QCD_2018'+deepak8str+'.coffea'
             },
             "weighted": {
                 "2016APV": {
-                    "800to1000": coffea_dir+'QCD_2016APV_800to1000_bkgest'+oldHTstr+'.coffea',
-                    "1000to1400": coffea_dir+'QCD_2016APV_1000to1400_bkgest'+oldHTstr+'.coffea',
+                    "300to470": coffea_dir+'QCD_2016APV_300to470_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2016APV_470to600_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2016APV_600to800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2016APV_800to1000_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2016APV_1000to1400_noSyst_bkgest'+oldHTstr+'.coffea',
                     "1400to1800": coffea_dir+'QCD_2016APV_1400to1800_bkgest'+oldHTstr+'.coffea',
                     "1800to2400": coffea_dir+'QCD_2016APV_1800to2400_bkgest'+oldHTstr+'.coffea',
-                    "2400to3200": coffea_dir+'QCD_2016APV_2400to3200_bkgest'+oldHTstr+'.coffea',
-                    "3200toInf": coffea_dir+'QCD_2016APV_3200toInf_bkgest'+oldHTstr+'.coffea'
+                    "2400to3200": coffea_dir+'QCD_2016APV_2400to3200_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2016APV_3200toInf_noSyst_bkgest'+oldHTstr+'.coffea'
                 },
                 "2016": {
-                    "800to1000": coffea_dir+'QCD_2016_800to1000_bkgest'+oldHTstr+'.coffea',
-                    "1000to1400": coffea_dir+'QCD_2016_1000to1400_bkgest'+oldHTstr+'.coffea',
-                    "1400to1800": coffea_dir+'QCD_2016_1400to1800_bkgest'+oldHTstr+'.coffea',
-                    "1800to2400": coffea_dir+'QCD_2016_1800to2400_bkgest'+oldHTstr+'.coffea',
-                    "2400to3200": coffea_dir+'QCD_2016_2400to3200_bkgest'+oldHTstr+'.coffea',
-                    "3200toInf": coffea_dir+'QCD_2016_3200toInf_bkgest'+oldHTstr+'.coffea'
+                    "300to470": coffea_dir+'QCD_2016_300to470_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2016_470to600_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2016_600to800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2016_800to1000_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2016_1000to1400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2016_1400to1800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2016_1800to2400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2016_2400to3200_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2016_3200toInf_noSyst_bkgest'+oldHTstr+'.coffea'
                 },
                 "2017": coffea_dir+'QCD_2017_bkgest.coffea',
                 "2018": coffea_dir+'QCD_2018_bkgest.coffea'

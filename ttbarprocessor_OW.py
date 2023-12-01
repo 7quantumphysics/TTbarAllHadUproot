@@ -70,7 +70,7 @@ def update(events, collections):
 """Package to perform the data-driven mistag-rate-based ttbar hadronic analysis. """
 class TTbarResProcessor(processor.ProcessorABC):
     def __init__(self,
-                 htCut=950., #1400.,
+                 htCut=1400.,
                  ak8PtMin=400.,
                  minMSD=105.,
                  maxMSD=210.,
@@ -152,7 +152,7 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         
-        self.bdisc = 0.8484 #btagcuts['medium'][self.iov] # old 2016AN --> 0.8484
+        self.bdisc = btagcuts['medium'][self.iov] # old 2016AN --> 0.8484
         
         
         
@@ -415,8 +415,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         # blinding #
-        if (isData and self.blinding) and (('2017' in self.iov) or ('2018' in self.iov)): 
-            events = events[::10]
+        # if (isData and self.blinding) and (('2017' in self.iov) or ('2018' in self.iov)): 
+        #     events = events[::10]
             
 
         # trigger cut #
@@ -731,10 +731,10 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         # b tagger #
         
-        # bdisc_s0 = np.maximum(SubJet00.btagDeepB , SubJet01.btagDeepB)
-        # bdisc_s1 = np.maximum(SubJet10.btagDeepB , SubJet11.btagDeepB)
-        bdisc_s0 = np.maximum(SubJet00.btagCSVV2 , SubJet01.btagCSVV2)
-        bdisc_s1 = np.maximum(SubJet10.btagCSVV2 , SubJet11.btagCSVV2)
+        bdisc_s0 = np.maximum(SubJet00.btagDeepB , SubJet01.btagDeepB)
+        bdisc_s1 = np.maximum(SubJet10.btagDeepB , SubJet11.btagDeepB)
+        # bdisc_s0 = np.maximum(SubJet00.btagCSVV2 , SubJet01.btagCSVV2)
+        # bdisc_s1 = np.maximum(SubJet10.btagCSVV2 , SubJet11.btagCSVV2)
         tdisc_s0 = ttbarcands.slot0.deepTagMD_TvsQCD
         tdisc_s1 = ttbarcands.slot1.deepTagMD_TvsQCD
         

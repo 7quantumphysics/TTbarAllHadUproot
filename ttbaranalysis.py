@@ -125,7 +125,7 @@ if __name__ == "__main__":
         'pileup',
         'pdf',
         'q2',
-        # 'btag',
+        'btag',
         'toptagsf',
         'toptagxs',
         'lumi'
@@ -248,7 +248,7 @@ if __name__ == "__main__":
                     subString += '_blinded'
                 if useDeepAK8: subString += '_DeepAK8' # Labeling for making outputs with deepAK8 tagger
                 if not MassModOn: subString += '_noMassMod'
-                subString += '_oldHTcut_oldBTag' # Temp label for testing with old HT cut of 950
+                # subString += '_oldHTcut_oldBTag' # Temp label for testing with old HT cut of 950
                                 
                 savefilename = f'{savedir}{sample}_{IOV}{subString}.coffea'
                 if 'RSGluon' in sample:
