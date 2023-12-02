@@ -415,8 +415,8 @@ class TTbarResProcessor(processor.ProcessorABC):
         
         
         # blinding #
-        # if (isData and self.blinding) and (('2017' in self.iov) or ('2018' in self.iov)): 
-        #     events = events[::10]
+        if (isData and self.blinding) and (('2017' in self.iov) or ('2018' in self.iov)): 
+            events = events[::10]
             
 
         # trigger cut #
