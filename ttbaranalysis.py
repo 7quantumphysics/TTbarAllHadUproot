@@ -231,12 +231,17 @@ if __name__ == "__main__":
 
             # run uproot job
             for subsection, files in filedict.items():
-
+                # print(files)
+                Files = []
                 # add redirector; select file for testing
-                files = [redirector + f for f in files]
-                if args.test: files = [files[int(len(files)/2)]]
-                fileset = {sample: files}            
-
+                for f in files:
+                    if f[0] == '/': Files.append(redirector + f)
+                    else: files = Files.append(f)
+                # print(Files)
+                if args.test: Files = [Files[int(len(Files)/2)]]
+                fileset = {sample: Files}            
+                print(Files)
+                
                 # coffea output file name
                 subString = subsection.replace('700to', '_700to').replace('1000to','_1000to').replace('15to','_15to').replace('300to','_300to').replace('470to','_470to').replace('600to','_600to').replace('800to1000', '_800to1000').replace('1400to','_1400to').replace('1800to','_1800to').replace('2400to','_2400to').replace('3200to','_3200to')
 #                 if args.OW: subString += '_OW'

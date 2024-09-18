@@ -24,8 +24,8 @@ toptag_kf = 1.0 #0.7
 qcd_xs = 13700000.0 #pb From https://cms-gen-dev.cern.ch/xsdb
 
 ttbar_xs = {'700to1000': 831.76 * (0.09210), #pb For ttbar mass from 700 to 1000
-            '1000toInf': 831.76 * (0.02474) #pb For ttbar mass from 1000 to Inf
-           }
+            '1000toInf': 831.76 * (0.02474) #pb For ttbar mass from 1_noSyst_00 to 
+}
 
 zprime_xs = {
     '1000': 2.222,
@@ -284,7 +284,7 @@ def makeSaveDirectories():
 
 
 
-def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
+def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False, useBlinded=True):
     
     coffea_dir = os.path.abspath('./').replace('/plots', '', ).replace('/python', '').replace('/mistag','') + '/outputs/'
 #     coffea_dir = os.path.abspath('./').replace('/plots', '', ).replace('/python', '').replace('/mistag','') + '/local/history/transferfxn/coffea/'
@@ -295,6 +295,9 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
     oldHTstr = ''
     if useOldHTcut:
         oldHTstr = '_oldHTcut_oldBTag'
+    blinded = ''
+    if useBlinded:
+        blinded = '_blinded'
     
     coffeaFiles = {
         "JetHT":{
@@ -313,17 +316,17 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
 
                 },
                 "2017": {
-                    "B": coffea_dir+'JetHT_2017B_blinded'+deepak8str+'.coffea',
-                    "C": coffea_dir+'JetHT_2017C_blinded'+deepak8str+'.coffea',
-                    "D": coffea_dir+'JetHT_2017D_blinded'+deepak8str+'.coffea',
-                    "E": coffea_dir+'JetHT_2017E_blinded'+deepak8str+'.coffea',
-                    "F": coffea_dir+'JetHT_2017F_blinded'+deepak8str+'.coffea'
+                    "B": coffea_dir+'JetHT_2017B_noSyst'+blinded+deepak8str+'.coffea',
+                    "C": coffea_dir+'JetHT_2017C_noSyst'+blinded+deepak8str+'.coffea',
+                    "D": coffea_dir+'JetHT_2017D_noSyst'+blinded+deepak8str+'.coffea',
+                    "E": coffea_dir+'JetHT_2017E_noSyst'+blinded+deepak8str+'.coffea',
+                    "F": coffea_dir+'JetHT_2017F_noSyst'+blinded+deepak8str+'.coffea'
                 },
                 "2018": {
-                    "A": coffea_dir+'JetHT_2018A_blinded'+deepak8str+'.coffea',
-                    "B": coffea_dir+'JetHT_2018B_blinded'+deepak8str+'.coffea',
-                    "C": coffea_dir+'JetHT_2018C_blinded'+deepak8str+'.coffea',
-                    "D": coffea_dir+'JetHT_2018D_blinded'+deepak8str+'.coffea'
+                    "A": coffea_dir+'JetHT_2018A_noSyst'+blinded+deepak8str+'.coffea',
+                    "B": coffea_dir+'JetHT_2018B_noSyst'+blinded+deepak8str+'.coffea',
+                    "C": coffea_dir+'JetHT_2018C_noSyst'+blinded+deepak8str+'.coffea',
+                    "D": coffea_dir+'JetHT_2018D_noSyst'+blinded+deepak8str+'.coffea'
                 }
             },
             "weighted": {
@@ -332,26 +335,25 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "C": coffea_dir+'JetHT_2016APVC_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
                     "D": coffea_dir+'JetHT_2016APVD_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
                     "E": coffea_dir+'JetHT_2016APVE_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
-                    "F": coffea_dir+'JetHT_2016APVF_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
+                    "F": coffea_dir+'JetHT_2016APVF_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea'
                 },
                 "2016": {
                     "F": coffea_dir+'JetHT_2016F_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
                     "G": coffea_dir+'JetHT_2016G_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
-                    "H": coffea_dir+'JetHT_2016H_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea',
-
+                    "H": coffea_dir+'JetHT_2016H_noSyst_bkgest'+deepak8str+oldHTstr+'.coffea'
                 },
                 "2017": {
-                    "B": coffea_dir+'JetHT_2017B_bkgest_blinded'+deepak8str+'.coffea',
-                    "C": coffea_dir+'JetHT_2017C_bkgest_blinded'+deepak8str+'.coffea',
-                    "D": coffea_dir+'JetHT_2017D_bkgest_blinded'+deepak8str+'.coffea',
-                    "E": coffea_dir+'JetHT_2017E_bkgest_blinded'+deepak8str+'.coffea',
-                    "F": coffea_dir+'JetHT_2017F_bkgest_blinded'+deepak8str+'.coffea'
+                    "B": coffea_dir+'JetHT_2017B_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "C": coffea_dir+'JetHT_2017C_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "D": coffea_dir+'JetHT_2017D_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "E": coffea_dir+'JetHT_2017E_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "F": coffea_dir+'JetHT_2017F_noSyst_bkgest'+blinded+deepak8str+'.coffea'
                 },
                 "2018": {
-                    "A": coffea_dir+'JetHT_2018A_bkgest_blinded'+deepak8str+'.coffea',
-                    "B": coffea_dir+'JetHT_2018B_bkgest_blinded'+deepak8str+'.coffea',
-                    "C": coffea_dir+'JetHT_2018C_bkgest_blinded'+deepak8str+'.coffea',
-                    "D": coffea_dir+'JetHT_2018D_bkgest_blinded'+deepak8str+'.coffea'
+                    "A": coffea_dir+'JetHT_2018A_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "B": coffea_dir+'JetHT_2018B_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "C": coffea_dir+'JetHT_2018C_noSyst_bkgest'+blinded+deepak8str+'.coffea',
+                    "D": coffea_dir+'JetHT_2018D_noSyst_bkgest'+blinded+deepak8str+'.coffea'
                 }
             },
             "noMassMod": {
@@ -360,26 +362,25 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "C": coffea_dir+'JetHT_2016APVC_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
                     "D": coffea_dir+'JetHT_2016APVD_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
                     "E": coffea_dir+'JetHT_2016APVE_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
-                    "F": coffea_dir+'JetHT_2016APVF_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
+                    "F": coffea_dir+'JetHT_2016APVF_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea'
                 },
                 "2016": {
                     "F": coffea_dir+'JetHT_2016F_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
                     "G": coffea_dir+'JetHT_2016G_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
-                    "H": coffea_dir+'JetHT_2016H_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea',
-
+                    "H": coffea_dir+'JetHT_2016H_noSyst_bkgest_noMassMod'+oldHTstr+'.coffea'
                 },
                 "2017": {
-                    "B": coffea_dir+'JetHT_2017B_bkgest_blinded_noMassMod.coffea',
-                    "C": coffea_dir+'JetHT_2017C_bkgest_blinded_noMassMod.coffea',
-                    "D": coffea_dir+'JetHT_2017D_bkgest_blinded_noMassMod.coffea',
-                    "E": coffea_dir+'JetHT_2017E_bkgest_blinded_noMassMod.coffea',
-                    "F": coffea_dir+'JetHT_2017F_bkgest_blinded_noMassMod.coffea'
+                    "B": coffea_dir+'JetHT_2017B_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "C": coffea_dir+'JetHT_2017C_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "D": coffea_dir+'JetHT_2017D_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "E": coffea_dir+'JetHT_2017E_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "F": coffea_dir+'JetHT_2017F_noSyst_bkgest'+blinded+'_noMassMod.coffea'
                 },
                 "2018": {
-                    "A": coffea_dir+'JetHT_2018A_bkgest_blinded_noMassMod.coffea',
-                    "B": coffea_dir+'JetHT_2018B_bkgest_blinded_noMassMod.coffea',
-                    "C": coffea_dir+'JetHT_2018C_bkgest_blinded_noMassMod.coffea',
-                    "D": coffea_dir+'JetHT_2018D_bkgest_blinded_noMassMod.coffea'
+                    "A": coffea_dir+'JetHT_2018A_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "B": coffea_dir+'JetHT_2018B_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "C": coffea_dir+'JetHT_2018C_noSyst_bkgest'+blinded+'_noMassMod.coffea',
+                    "D": coffea_dir+'JetHT_2018D_noSyst_bkgest'+blinded+'_noMassMod.coffea'
                 }
             }
         },
@@ -467,8 +468,28 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "2400to3200": coffea_dir+'QCD_2016_2400to3200_noSyst'+oldHTstr+'.coffea',
                     "3200toInf": coffea_dir+'QCD_2016_3200toInf_noSyst'+oldHTstr+'.coffea'
                 },
-                "2017": coffea_dir+'QCD_2017'+deepak8str+'.coffea',
-                "2018": coffea_dir+'QCD_2018'+deepak8str+'.coffea'
+                "2017": {
+                    "300to470": coffea_dir+'QCD_2017_300to470_noSyst'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2017_470to600_noSyst'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2017_600to800_noSyst'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2017_800to1000_noSyst'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2017_1000to1400_noSyst'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2017_1400to1800_noSyst'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2017_1800to2400_noSyst'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2017_2400to3200_noSyst'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2017_3200toInf_noSyst'+oldHTstr+'.coffea'
+                },
+                "2018": {
+                    "300to470": coffea_dir+'QCD_2018_300to470_noSyst'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2018_470to600_noSyst'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2018_600to800_noSyst'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2018_800to1000_noSyst'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2018_1000to1400_noSyst'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2018_1400to1800_noSyst'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2018_1800to2400_noSyst'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2018_2400to3200_noSyst'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2018_3200toInf_noSyst'+oldHTstr+'.coffea'
+                }
             },
             "weighted": {
                 "2016APV": {
@@ -493,8 +514,28 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "2400to3200": coffea_dir+'QCD_2016_2400to3200_noSyst_bkgest'+oldHTstr+'.coffea',
                     "3200toInf": coffea_dir+'QCD_2016_3200toInf_noSyst_bkgest'+oldHTstr+'.coffea'
                 },
-                "2017": coffea_dir+'QCD_2017_bkgest.coffea',
-                "2018": coffea_dir+'QCD_2018_bkgest.coffea'
+                "2017": {
+                    "300to470": coffea_dir+'QCD_2017_300to470_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2017_470to600_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2017_600to800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2017_800to1000_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2017_1000to1400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2017_1400to1800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2017_1800to2400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2017_2400to3200_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2017_3200toInf_noSyst_bkgest'+oldHTstr+'.coffea'
+                },
+                "2018": {
+                    "300to470": coffea_dir+'QCD_2018_300to470_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "470to600": coffea_dir+'QCD_2018_470to600_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "600to800": coffea_dir+'QCD_2018_600to800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "800to1000": coffea_dir+'QCD_2018_800to1000_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1000to1400": coffea_dir+'QCD_2018_1000to1400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1400to1800": coffea_dir+'QCD_2018_1400to1800_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "1800to2400": coffea_dir+'QCD_2018_1800to2400_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "2400to3200": coffea_dir+'QCD_2018_2400to3200_noSyst_bkgest'+oldHTstr+'.coffea',
+                    "3200toInf": coffea_dir+'QCD_2018_3200toInf_noSyst_bkgest'+oldHTstr+'.coffea'
+                }
             }
         },
         
@@ -576,16 +617,30 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "4500": coffea_dir+'ZPrime4500_1_2016'+oldHTstr+'.coffea'
                 },
                 "2017": {
-                    "1000": coffea_dir+'ZPrime1000_1_2017.coffea',
-                    "2000": coffea_dir+'ZPrime2000_1_2017.coffea',
-                    "3000": coffea_dir+'ZPrime3000_1_2017.coffea',
-                    "4000": coffea_dir+'ZPrime4000_1_2017.coffea'
+                    "1000": coffea_dir+'ZPrime1000_1_2017'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_1_2017'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_1_2017'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_1_2017'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_1_2017'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_1_2017'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_1_2017'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_1_2017'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_1_2017'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_1_2017'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_1_2017'+oldHTstr+'.coffea'
                 },
                 "2018": {
-                    "1000": coffea_dir+'ZPrime1000_1_2018.coffea',
-                    "2000": coffea_dir+'ZPrime2000_1_2018.coffea',
-                    "3000": coffea_dir+'ZPrime3000_1_2018.coffea',
-                    "4000": coffea_dir+'ZPrime4000_1_2018.coffea'
+                    "1000": coffea_dir+'ZPrime1000_1_2018'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_1_2018'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_1_2018'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_1_2018'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_1_2018'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_1_2018'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_1_2018'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_1_2018'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_1_2018'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_1_2018'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_1_2018'+oldHTstr+'.coffea'
                 }
             }
         },
@@ -621,16 +676,32 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "5000": coffea_dir+'ZPrime5000_10_2016'+oldHTstr+'.coffea'
                 },
                 "2017": {
-                    "1000": coffea_dir+'ZPrime1000_10_2017.coffea',
-                    "2000": coffea_dir+'ZPrime2000_10_2017.coffea',
-                    "3000": coffea_dir+'ZPrime3000_10_2017.coffea',
-                    "4000": coffea_dir+'ZPrime4000_10_2017.coffea'
+                    "1000": coffea_dir+'ZPrime1000_10_2017'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_10_2017'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_10_2017'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_10_2017'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_10_2017'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_10_2017'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_10_2017'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_10_2017'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_10_2017'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_10_2017'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_10_2017'+oldHTstr+'.coffea',
+                    "5000": coffea_dir+'ZPrime5000_10_2017'+oldHTstr+'.coffea'
                 },
                 "2018": {
-                    "1000": coffea_dir+'ZPrime1000_10_2018.coffea',
-                    "2000": coffea_dir+'ZPrime2000_10_2018.coffea',
-                    "3000": coffea_dir+'ZPrime3000_10_2018.coffea',
-                    "4000": coffea_dir+'ZPrime4000_10_2018.coffea'
+                    "1000": coffea_dir+'ZPrime1000_10_2018'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_10_2018'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_10_2018'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_10_2018'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_10_2018'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_10_2018'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_10_2018'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_10_2018'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_10_2018'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_10_2018'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_10_2018'+oldHTstr+'.coffea',
+                    "5000": coffea_dir+'ZPrime5000_10_2018'+oldHTstr+'.coffea'
                 }
             }
         },
@@ -666,16 +737,32 @@ def getCoffeaFilenames(useDeepAK8=False, useOldHTcut=False):
                     "5000": coffea_dir+'ZPrime5000_30_2016'+oldHTstr+'.coffea'
                 },
                 "2017": {
-                    "1000": coffea_dir+'ZPrime1000_30_2017.coffea',
-                    "2000": coffea_dir+'ZPrime2000_30_2017.coffea',
-                    "3000": coffea_dir+'ZPrime3000_30_2017.coffea',
-                    "4000": coffea_dir+'ZPrime4000_30_2017.coffea'
+                    "1000": coffea_dir+'ZPrime1000_30_2017'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_30_2017'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_30_2017'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_30_2017'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_30_2017'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_30_2017'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_30_2017'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_30_2017'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_30_2017'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_30_2017'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_30_2017'+oldHTstr+'.coffea',
+                    "5000": coffea_dir+'ZPrime5000_30_2017'+oldHTstr+'.coffea'
                 },
                 "2018": {
-                    "1000": coffea_dir+'ZPrime1000_30_2018.coffea',
-                    "2000": coffea_dir+'ZPrime2000_30_2018.coffea',
-                    "3000": coffea_dir+'ZPrime3000_30_2018.coffea',
-                    "4000": coffea_dir+'ZPrime4000_30_2018.coffea'
+                    "1000": coffea_dir+'ZPrime1000_30_2018'+oldHTstr+'.coffea',
+                    "1200": coffea_dir+'ZPrime1200_30_2018'+oldHTstr+'.coffea',
+                    "1400": coffea_dir+'ZPrime1400_30_2018'+oldHTstr+'.coffea',
+                    "1600": coffea_dir+'ZPrime1600_30_2018'+oldHTstr+'.coffea',
+                    "1800": coffea_dir+'ZPrime1800_30_2018'+oldHTstr+'.coffea',
+                    "2000": coffea_dir+'ZPrime2000_30_2018'+oldHTstr+'.coffea',
+                    "2500": coffea_dir+'ZPrime2500_30_2018'+oldHTstr+'.coffea',
+                    "3000": coffea_dir+'ZPrime3000_30_2018'+oldHTstr+'.coffea',
+                    "3500": coffea_dir+'ZPrime3500_30_2018'+oldHTstr+'.coffea',
+                    "4000": coffea_dir+'ZPrime4000_30_2018'+oldHTstr+'.coffea',
+                    "4500": coffea_dir+'ZPrime4500_30_2018'+oldHTstr+'.coffea',
+                    "5000": coffea_dir+'ZPrime5000_30_2018'+oldHTstr+'.coffea'
                 }
             }
         },

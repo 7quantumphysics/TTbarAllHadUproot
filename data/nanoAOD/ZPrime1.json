@@ -5,6 +5,10 @@
         "/ZprimeToTT_M{XXXX}_W{XXX}_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/RunIISummer19UL17NanoAODv2-106X_mc2017_realistic_v8-v1/NANOAODSIM",
         "/ZprimeToTT_M{XXXX}_W{XXX}_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/RunIISummer19UL18NanoAODv2-106X_upgrade2018_realistic_v15_L1v1-v1/NANOAODSIM"
     ],
+    
+    "removedFiles": [
+        "None"
+    ],
 
     "2016APV": {
         "1000": [
@@ -218,9 +222,9 @@
     
     "2017": {
         "1000": [
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/20000/B0E422A4-1AE7-6A47-97A5-02393F74B411.root",
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/250000/0D822D6B-A172-384A-9F66-1A958A99BACA.root",
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/280000/3E380258-C306-D742-9737-EF58F4ED9107.root"
+            "root://rdr.echo.stfc.ac.uk:1094//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/20000/B0E422A4-1AE7-6A47-97A5-02393F74B411.root",
+            "root://rdr.echo.stfc.ac.uk:1094//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/250000/0D822D6B-A172-384A-9F66-1A958A99BACA.root",
+            "root://xrootd.hep.kbfi.ee:1094//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/280000/3E380258-C306-D742-9737-EF58F4ED9107.root"
         ],
         "1200": [
             "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M1200_W12_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/270000/DA0D7FB8-C101-DF4C-B03E-92EDD3D92BB3.root",
@@ -252,10 +256,10 @@
             "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2000_W20_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/280000/3CDF503E-D3B2-8C4D-9803-F3903B390084.root"
         ],
         "2500": [
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/250000/55394F57-22BD-4441-BEED-3BFA5DC1A939.root",
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/270000/38AEC9A3-929D-894A-B78D-964AB9DFD347.root",
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/280000/2D2FDCBB-DB0A-1147-88E6-EA1141BAF217.root",
-            "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/50000/C8ADFE74-CC9B-6C48-9D84-424F8A0FE2E1.root"
+            "root://cmseos.fnal.gov//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/250000/55394F57-22BD-4441-BEED-3BFA5DC1A939.root",
+            "root://cmseos.fnal.gov//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/270000/38AEC9A3-929D-894A-B78D-964AB9DFD347.root",
+            "root://cmseos.fnal.gov//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/280000/2D2FDCBB-DB0A-1147-88E6-EA1141BAF217.root",
+            "root://cmseos.fnal.gov//store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M2500_W25_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/50000/C8ADFE74-CC9B-6C48-9D84-424F8A0FE2E1.root"
         ],
         "3000": [
             "/store/mc/RunIISummer19UL17NanoAODv2/ZprimeToTT_M3000_W30_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_mc2017_realistic_v8-v1/270000/DB9619F4-030C-A043-A7A4-0651CC9313C8.root",
@@ -287,11 +291,11 @@
     
     "2018": {
         "1000": [
-            "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/280000/2418D843-ED00-3145-8EAE-97EA2B1BD8DC.root",
-            "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/280000/2A281349-A7E7-2B4A-875E-4A3815DCF4B4.root",
-            "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/40000/2A1E12FB-ABBE-EF4E-866D-08181C455D72.root",
-            "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/40000/680A605C-D521-C941-BC22-858B53A0F064.root",
-            "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/50000/F8D5D67D-97FF-7B44-8001-76E5DB97E177.root"
+            "root://xrootd-local.unl.edu//store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/280000/2418D843-ED00-3145-8EAE-97EA2B1BD8DC.root",
+            "root://xrootd-local.unl.edu//store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/280000/2A281349-A7E7-2B4A-875E-4A3815DCF4B4.root",
+            "root://xrootd-local.unl.edu//store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/40000/2A1E12FB-ABBE-EF4E-866D-08181C455D72.root",
+            "root://xrootd-local.unl.edu//store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/40000/680A605C-D521-C941-BC22-858B53A0F064.root",
+            "root://xrootd-local.unl.edu//store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1000_W10_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/50000/F8D5D67D-97FF-7B44-8001-76E5DB97E177.root"
         ],
         "1200": [
             "/store/mc/RunIISummer19UL18NanoAODv2/ZprimeToTT_M1200_W12_TuneCP2_PSweights_13TeV-madgraph-pythiaMLM-pythia8/NANOAODSIM/106X_upgrade2018_realistic_v15_L1v1-v1/280000/770C6D23-7AE5-674B-9541-EFA4C574DCDA.root",
