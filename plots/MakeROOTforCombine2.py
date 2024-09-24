@@ -18,17 +18,17 @@ hep.style.use("CMS")
 sys.path.append('../python/')
 from functions import loadCoffeaFile, getLabelMap, getCoffeaFilenames, plotBackgroundEstimate, getHist
 
-SignalToRun = 'ZPrime30'
+SignalToRun = 'ZPrimeDM'
 useOldHTcut = False
-useBlinding = False
+useBlinding = True
 
 lumi = {
     "2016APV": 19800.,
     "2016": 16120., #35920 - 19800
     "2016all": 35920,
-    "2017": 41530.,
-    "2018": 59800., 
-    "Full": 137190.
+    "2017": 41530./10.,
+    "2018": 59800./10., 
+    "Full": 35920. + (41530./10.) + (59800./10.) #137190.
 }
 
 ttbar_xs1 = 831.76 * (0.09210) #pb For ttbar mass from 700 to 1000 | XSDB: 65.49 --> 14.5% difference
@@ -261,7 +261,7 @@ def getHist_NoWeight(hname, ds, bkgest, year, sum_axes=[], integrate_axes={}, ma
 
     
     # load histograms and get scale factors
-    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, False)
+    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, useBlinding)
     
     cfiles = []
     sf = []
@@ -302,7 +302,7 @@ def getHist(hname, ds, bkgest, year, sum_axes=[], integrate_axes={}, masspoint='
 
     
     # load histograms and get scale factors
-    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, False)
+    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, useBlinding)
     
     cfiles = []
     sf = []
@@ -361,7 +361,7 @@ def getHistNoMassMod(hname, ds, year, sum_axes=[], integrate_axes={}):
 
     
     # load histograms and get scale factors
-    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, False)
+    coffeaFiles = getCoffeaFilenames(False, useOldHTcut, useBlinding)
     
     cfiles = []
     sf = []
@@ -870,7 +870,7 @@ for s in systematics:
 savefileheader = '../outputs/combine2/TTbarAllHadFull_'
 
 #### -------- Switch this after the file is created -------- ####
-froot = uproot.recreate(savefileheader+'CombineRoot_Cat_'+SignalToRun+'.root')
+froot = uproot.recreate(savefileheader+'CombineRoot_Cat_'+SignalToRun+'_Blinded.root')
 # froot = uproot.reading.open(savefileheader+'CombineRoot_Cat_'+SignalToRun+'.root')
 
 variable = 'ttbarmass'
@@ -901,8 +901,8 @@ for IOV in IOVs:
         Ndenom = HistDict['antitag_data'].values() - HistDict['antitag_ttbar'].values()
         mistag_data = np.where(HistDict['pretag'].values()>0., HistDict['ntmj_fixed'].values() / HistDict['pretag'].values(), 0.)
         term1 = np.where(HistDict['pretag'].values()>0., 1. / HistDict['pretag'].values(), 0.)
-        term2 = np.where( ((Ndenom*mistag_data)>0.), (np.ones(len(mistag_data))-mistag_data)/(Ndenom*mistag_data), 0. ) 
-        mistagErrProp =  HistDict['ntmj_fixed']*np.sqrt( term1 + term2 )# 1 + 2 = mistag error & stat. error of NTMJ
+        term2 = np.where( ((Ndenom)>0.), mistag_data*(np.ones(len(mistag_data))-mistag_data)/(Ndenom), 0. ) 
+        mistagErrProp =  HistDict['ntmj_fixed']*np.sqrt( term1 + term2 )# 1 + 2 = stat. error of NTMJ & mistag error
 
         mmTerm1 = (HistDict['ntmj_fixed_noMM'].values() - HistDict['ntmj_fixed'].values()) # "source" of Mass Mod error
         mmTerm2 = (HistDict['ntmj_fixed_noMM'].values() + HistDict['ntmj_fixed'].values()) / 2.
@@ -913,7 +913,7 @@ for IOV in IOVs:
         qcdTerm2 = (HistDict['QCDbkgest'].values() + HistDict['QCDsignal'].values()) / 2.
         qcdPercentErr = np.where((qcdTerm2 > 0), qcdTerm1/qcdTerm2, 0.) # Calculated percent error of the difference
         qcdErrProp = HistDict['ntmj_fixed']*np.abs(qcdPercentErr) #QCD closure error
-
+        
         froot["bkgest_"+catname+IOV+'_mistagUp'] = HistDict['ntmj_fixed'] + mistagErrProp
         froot["bkgest_"+catname+IOV+'_mistagDown'] = HistDict['ntmj_fixed'] + -1.0*mistagErrProp
 
